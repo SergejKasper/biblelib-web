@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity HasBook.
+    -->
+    <changeSet id="20160816153658-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="borrower_id"
+                                 baseTableName="has_book"
+                                 constraintName="fk_hasbook_borrower_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="borrower"/>
+
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="has_book"
+                                 constraintName="fk_hasbook_book_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+
+    </changeSet>
+</databaseChangeLog>
