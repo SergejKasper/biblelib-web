@@ -5,9 +5,9 @@
         .module('bibelBibliothekApp')
         .controller('BookDialogController', BookDialogController);
 
-    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'Author', 'HasBook'];
+    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author'];
 
-    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, Author, HasBook) {
+    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, HasBook, Author) {
         var vm = this;
 
         vm.book = entity;
@@ -15,8 +15,8 @@
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
         vm.save = save;
-        vm.authors = Author.query();
         vm.hasbooks = HasBook.query();
+        vm.authors = Author.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

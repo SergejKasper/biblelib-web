@@ -1,10 +1,8 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.springframework.data.elasticsearch.annotations.Document;
-import javax.persistence.FetchType;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -51,12 +49,12 @@ public class Book implements Serializable {
     @Column(name = "cover_content_type")
     private String coverContentType;
 
-    @ManyToOne
-    private Author author;
-
-    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<HasBook> borrowers = new HashSet<>();
+
+    @ManyToOne
+    private Author author;
 
     public Long getId() {
         return id;
@@ -114,20 +112,20 @@ public class Book implements Serializable {
         this.coverContentType = coverContentType;
     }
 
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
     public Set<HasBook> getBorrowers() {
         return borrowers;
     }
 
     public void setBorrowers(Set<HasBook> hasBooks) {
         this.borrowers = hasBooks;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     @Override

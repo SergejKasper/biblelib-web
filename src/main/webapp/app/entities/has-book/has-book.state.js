@@ -97,7 +97,7 @@
                             return {
                                 borrowDate: null,
                                 returnDate: null,
-                                returned: null,
+                                returned: false,
                                 id: null
                             };
                         }

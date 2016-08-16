@@ -1,9 +1,8 @@
-
 entity Book {
-   	bookISBN Long,
-    title String required maxlength(80),
-    description String maxlength(255),
-    language Language,
+   	bookISBN Long
+    title String required maxlength(80)
+    description String maxlength(255)
+    language Language
     cover ImageBlob
 }
 
@@ -12,24 +11,26 @@ entity Author {
 }
 
 entity HasBook {
-	borrowDate LocalDate required,
-	returnDate LocalDate required,
-    returned Boolean
+	borrowDate LocalDate required
+	returnDate LocalDate required
+    returned Boolean required
 }
 
 entity Borrower {
-  	name String maxlength(40),
-	email String,
+  	name String required maxlength(40)
+	email String
 	phoneNumber String
 }
 
 enum Language {
-    DEUTSCH, ENGLISCH, RUSSISCH
+    DEUTSCH,
+    ENGLISCH,
+  	RUSSISCH
 }
 
-relationship ManyToMany {
-  HasBook{borrower(name)} to Borrower{has},
-  HasBook{book(title)} to Book{borrowedBy}
+relationship OneToMany {
+  Borrower{book(title)} to HasBook{borrower(name)},
+  Book{borrower(name)} to HasBook{book(title)}
 }
 
 relationship OneToMany {

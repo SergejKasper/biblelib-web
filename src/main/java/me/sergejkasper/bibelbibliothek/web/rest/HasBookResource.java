@@ -121,7 +121,7 @@ public class HasBookResource {
     @Timed
     public ResponseEntity<HasBook> getHasBook(@PathVariable Long id) {
         log.debug("REST request to get HasBook : {}", id);
-        HasBook hasBook = hasBookRepository.findOneWithEagerRelationships(id);
+        HasBook hasBook = hasBookRepository.findOne(id);
         return Optional.ofNullable(hasBook)
             .map(result -> new ResponseEntity<>(
                 result,

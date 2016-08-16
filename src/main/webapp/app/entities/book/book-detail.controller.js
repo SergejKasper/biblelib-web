@@ -5,9 +5,9 @@
         .module('bibelBibliothekApp')
         .controller('BookDetailController', BookDetailController);
 
-    BookDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Book', 'Author', 'HasBook'];
+    BookDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author'];
 
-    function BookDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Book, Author, HasBook) {
+    function BookDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Book, HasBook, Author) {
         var vm = this;
 
         vm.book = entity;

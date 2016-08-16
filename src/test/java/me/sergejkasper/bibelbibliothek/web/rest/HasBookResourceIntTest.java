@@ -153,6 +153,24 @@ public class HasBookResourceIntTest {
 
     @Test
     @Transactional
+    public void checkReturnedIsRequired() throws Exception {
+        int databaseSizeBeforeTest = hasBookRepository.findAll().size();
+        // set the field null
+        hasBook.setReturned(null);
+
+        // Create the HasBook, which fails.
+
+        restHasBookMockMvc.perform(post("/api/has-books")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(hasBook)))
+                .andExpect(status().isBadRequest());
+
+        List<HasBook> hasBooks = hasBookRepository.findAll();
+        assertThat(hasBooks).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllHasBooks() throws Exception {
         // Initialize the database
         hasBookRepository.saveAndFlush(hasBook);

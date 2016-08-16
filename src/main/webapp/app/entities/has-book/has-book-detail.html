@@ -18,15 +18,11 @@
         </dd>
         <dt><span>Borrower</span></dt>
         <dd>
-            <span ng-repeat="borrower in vm.hasBook.borrowers">
-                <a ui-sref="borrower-detail({id: borrower.id})">{{borrower.name}}</a>{{$last ? '' : ', '}}
-            </span>
+            <a ui-sref="borrower-detail({id:vm.hasBook.borrower.id})">{{vm.hasBook.borrower.name}}</a>
         </dd>
         <dt><span>Book</span></dt>
         <dd>
-            <span ng-repeat="book in vm.hasBook.books">
-                <a ui-sref="book-detail({id: book.id})">{{book.title}}</a>{{$last ? '' : ', '}}
-            </span>
+            <a ui-sref="book-detail({id:vm.hasBook.book.id})">{{vm.hasBook.book.title}}</a>
         </dd>
     </dl>
 

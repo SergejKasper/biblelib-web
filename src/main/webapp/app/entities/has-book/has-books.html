@@ -39,6 +39,8 @@
                     <th jh-sort-by="borrowDate"><span>Borrow Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="returnDate"><span>Return Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="returned"><span>Returned</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="borrower.name"><span>Borrower</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="book.title"><span>Book</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -48,8 +50,12 @@
                         <td>{{hasBook.borrowDate | date:'mediumDate'}}</td>
                         <td>{{hasBook.returnDate | date:'mediumDate'}}</td>
                     <td>{{hasBook.returned}}</td>
-                    <td>{{hasBook.borrowers[hasBook.borrowers.length -1].name}}</td>
-                    <td>{{hasBook.books[hasBook.books.length -1].title}}</td>
+                    <td>
+                        <a ui-sref="borrower-detail({id:hasBook.borrower.id})">{{hasBook.borrower.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="book-detail({id:hasBook.book.id})">{{hasBook.book.title}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

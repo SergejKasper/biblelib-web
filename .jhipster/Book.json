@@ -1,17 +1,16 @@
 {
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "relationshipName": "borrower",
+      "otherEntityName": "hasBook",
+      "otherEntityRelationshipName": "book"
+    },
+    {
       "relationshipType": "many-to-one",
       "relationshipName": "author",
       "otherEntityName": "author",
       "otherEntityField": "name"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "relationshipName": "borrower",
-      "otherEntityName": "hasBook",
-      "ownerSide": false,
-      "otherEntityRelationshipName": "book"
     }
   ],
   "fields": [
@@ -47,7 +46,7 @@
       "fieldTypeBlobContent": "image"
     }
   ],
-  "changelogDate": "20160816124310",
+  "changelogDate": "20160816145304",
   "entityTableName": "book",
   "dto": "no",
   "pagination": "infinite-scroll",

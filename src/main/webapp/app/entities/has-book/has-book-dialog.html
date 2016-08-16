@@ -50,15 +50,25 @@
             <input type="checkbox" class="form-control" name="returned" id="field_returned"
                     ng-model="vm.hasBook.returned"
                      />
+            <div ng-show="editForm.returned.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.returned.$error.required">
+                    This field is required.
+                </p>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="field_borrower">Borrower</label>
-            <select class="form-control" id="field_borrower" multiple name="borrower" ng-model="vm.hasBook.borrowers" ng-options="borrower as borrower.name for borrower in vm.borrowers track by borrower.id"></select>
+            <select class="form-control" id="field_borrower" name="borrower" ng-model="vm.hasBook.borrower" ng-options="borrower as borrower.name for borrower in vm.borrowers track by borrower.id">
+                <option value=""></option>
+            </select>
         </div>
         <div class="form-group">
             <label for="field_book">Book</label>
-            <select class="form-control" id="field_book" multiple name="book" ng-model="vm.hasBook.books" ng-options="book as book.title for book in vm.books track by book.id"></select>
+            <select class="form-control" id="field_book" name="book" ng-model="vm.hasBook.book" ng-options="book as book.title for book in vm.books track by book.id">
+                <option value=""></option>
+            </select>
         </div>
     </div>
     <div class="modal-footer">

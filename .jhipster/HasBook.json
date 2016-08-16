@@ -1,18 +1,16 @@
 {
   "relationships": [
     {
-      "relationshipType": "many-to-many",
+      "relationshipType": "many-to-one",
       "relationshipName": "borrower",
       "otherEntityName": "borrower",
-      "otherEntityField": "name",
-      "ownerSide": true
+      "otherEntityField": "name"
     },
     {
-      "relationshipType": "many-to-many",
+      "relationshipType": "many-to-one",
       "relationshipName": "book",
       "otherEntityName": "book",
-      "otherEntityField": "title",
-      "ownerSide": true
+      "otherEntityField": "title"
     }
   ],
   "fields": [
@@ -32,10 +30,13 @@
     },
     {
       "fieldName": "returned",
-      "fieldType": "Boolean"
+      "fieldType": "Boolean",
+      "fieldValidateRules": [
+        "required"
+      ]
     }
   ],
-  "changelogDate": "20160816115212",
+  "changelogDate": "20160816150623",
   "entityTableName": "has_book",
   "dto": "no",
   "pagination": "infinite-scroll",

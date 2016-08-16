@@ -1,14 +1,11 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
 import org.springframework.data.elasticsearch.annotations.Document;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,22 +30,15 @@ public class HasBook implements Serializable {
     @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
 
-    @Column(name = "returned")
+    @NotNull
+    @Column(name = "returned", nullable = false)
     private Boolean returned;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonProperty("borrowers")
-    @JoinTable(name = "has_book_borrower",
-               joinColumns = @JoinColumn(name="has_books_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="borrowers_id", referencedColumnName="ID"))
-    private Set<Borrower> borrowers = new HashSet<>();
+    @ManyToOne
+    private Borrower borrower;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonProperty("books")
-    @JoinTable(name = "has_book_book",
-               joinColumns = @JoinColumn(name="has_books_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="books_id", referencedColumnName="ID"))
-    private Set<Book> books = new HashSet<>();
+    @ManyToOne
+    private Book book;
 
     public Long getId() {
         return id;
@@ -82,20 +72,20 @@ public class HasBook implements Serializable {
         this.returned = returned;
     }
 
-    public Set<Borrower> getBorrowers() {
-        return borrowers;
+    public Borrower getBorrower() {
+        return borrower;
     }
 
-    public void setBorrowers(Set<Borrower> borrowers) {
-        this.borrowers = borrowers;
+    public void setBorrower(Borrower borrower) {
+        this.borrower = borrower;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
