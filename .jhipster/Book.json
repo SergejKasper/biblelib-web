@@ -1,0 +1,55 @@
+{
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "author",
+      "otherEntityName": "author",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "relationshipName": "borrower",
+      "otherEntityName": "hasBook",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "book"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "bookIsbn",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 80
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 255
+    },
+    {
+      "fieldName": "language",
+      "fieldType": "Language",
+      "fieldValues": "DEUTSCH,ENGLISCH,RUSSISCH"
+    },
+    {
+      "fieldName": "cover",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "changelogDate": "20160816124310",
+  "entityTableName": "book",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

@@ -1,0 +1,25 @@
+{
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "relationshipName": "book",
+      "otherEntityName": "book",
+      "otherEntityRelationshipName": "author"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 40
+    }
+  ],
+  "changelogDate": "20160816115211",
+  "entityTableName": "author",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

@@ -1,0 +1,96 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBookLabel">Create or edit a Book</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.book.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.book.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_bookIsbn">Book Isbn</label>
+            <input type="number" class="form-control" name="bookIsbn" id="field_bookIsbn"
+                    ng-model="vm.book.bookIsbn"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="vm.book.title"
+                    required ng-maxlength="80" />
+            <div ng-show="editForm.title.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.title.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.title.$error.maxlength">
+                    This field cannot be longer than 80 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.book.description"
+                    ng-maxlength="255" />
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.maxlength">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_language">Language</label>
+            <select class="form-control" name="language" ng-model="vm.book.language" id="field_language">
+                <option value="DEUTSCH">DEUTSCH</option>
+                <option value="ENGLISCH">ENGLISCH</option>
+                <option value="RUSSISCH">RUSSISCH</option>
+            </select>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setCover($file, vm.book)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_cover">Cover</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.book.coverContentType + ';base64,' + vm.book.cover}}" style="max-height: 100px;" ng-if="vm.book.cover"/>
+                <div ng-if="vm.book.cover" class="help-block clearfix">
+                    <span class="pull-left">{{vm.book.coverContentType}}, {{vm.byteSize(vm.book.cover)}}</span>
+                    <button ng-click="vm.book.cover=null;vm.book.coverContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setCover($file, vm.book)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="cover" id="field_cover"
+                    ng-model="vm.book.cover"
+                     />
+            <input type="hidden" class="form-control" name="coverContentType" id="field_coverContentType"
+                    ng-model="vm.book.coverContentType" />
+        </div>
+
+        <div class="form-group">
+            <label for="field_author">Author</label>
+            <select class="form-control" id="field_author" name="author" ng-model="vm.book.author" ng-options="author as author.name for author in vm.authors track by author.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

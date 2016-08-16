@@ -1,0 +1,43 @@
+{
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "relationshipName": "borrower",
+      "otherEntityName": "borrower",
+      "otherEntityField": "name",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "relationshipName": "book",
+      "otherEntityName": "book",
+      "otherEntityField": "title",
+      "ownerSide": true
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "borrowDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "returnDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "returned",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20160816115212",
+  "entityTableName": "has_book",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

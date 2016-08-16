@@ -1,0 +1,35 @@
+{
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "relationshipName": "book",
+      "otherEntityName": "hasBook",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "borrower"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 40
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160816124313",
+  "entityTableName": "borrower",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

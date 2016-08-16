@@ -1,0 +1,41 @@
+
+entity Book {
+   	bookISBN Long,
+    title String required maxlength(80),
+    description String maxlength(255),
+    language Language,
+    cover ImageBlob
+}
+
+entity Author {
+    name String maxlength(40)
+}
+
+entity HasBook {
+	borrowDate LocalDate required,
+	returnDate LocalDate required,
+    returned Boolean
+}
+
+entity Borrower {
+  	name String maxlength(40),
+	email String,
+	phoneNumber String
+}
+
+enum Language {
+    DEUTSCH, ENGLISCH, RUSSISCH
+}
+
+relationship ManyToMany {
+  HasBook{borrower(name)} to Borrower{has},
+  HasBook{book(title)} to Book{borrowedBy}
+}
+
+relationship OneToMany {
+  Author{book(title)} to Book{author(name)}
+}
+
+paginate Author, Book, Borrower, HasBook with infinite-scroll
+
+	
