@@ -3,6 +3,8 @@ package me.sergejkasper.bibelbibliothek.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -20,6 +22,7 @@ import me.sergejkasper.bibelbibliothek.domain.enumeration.Language;
 @Entity
 @Table(name = "book")
 @Document(indexName = "book")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +55,7 @@ public class Book implements Serializable {
     @Column(name = "cover_content_type")
     private String coverContentType;
 
-    @OneToMany(mappedBy = "book")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private Set<HasBook> borrowers = new HashSet<>();
 
     @ManyToOne

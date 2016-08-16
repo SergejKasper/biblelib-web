@@ -3,6 +3,10 @@ package me.sergejkasper.bibelbibliothek.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import me.sergejkasper.bibelbibliothek.web.rest.HasBookSerializer;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -18,6 +22,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "borrower")
 @Document(indexName = "borrower")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Borrower implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,7 +43,6 @@ public class Borrower implements Serializable {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "borrower", fetch = FetchType.EAGER)
-    @JsonManagedReference
     private Set<HasBook> books = new HashSet<>();
 
     public Long getId() {
