@@ -27,16 +27,9 @@
       "fieldValidateRules": [
         "required"
       ]
-    },
-    {
-      "fieldName": "returned",
-      "fieldType": "Boolean",
-      "fieldValidateRules": [
-        "required"
-      ]
     }
   ],
-  "changelogDate": "20160816150623",
+  "changelogDate": "20160816153658",
   "entityTableName": "has_book",
   "dto": "no",
   "pagination": "infinite-scroll",

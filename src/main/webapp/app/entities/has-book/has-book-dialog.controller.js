@@ -16,7 +16,7 @@
         vm.openCalendar = openCalendar;
         vm.save = save;
         vm.borrowers = Borrower.query();
-        vm.books = Book.query({filter: 'no-borrowers'});
+        vm.books = Book.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -30,10 +30,6 @@ public class HasBook implements Serializable {
     @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
 
-    @NotNull
-    @Column(name = "returned", nullable = false)
-    private Boolean returned;
-
     @ManyToOne
     private Borrower borrower;
 
@@ -62,14 +58,6 @@ public class HasBook implements Serializable {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
-    }
-
-    public Boolean isReturned() {
-        return returned;
-    }
-
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
     }
 
     public Borrower getBorrower() {
@@ -114,7 +102,6 @@ public class HasBook implements Serializable {
             "id=" + id +
             ", borrowDate='" + borrowDate + "'" +
             ", returnDate='" + returnDate + "'" +
-            ", returned='" + returned + "'" +
             '}';
     }
 }

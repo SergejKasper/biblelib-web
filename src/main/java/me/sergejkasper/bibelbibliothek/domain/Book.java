@@ -49,7 +49,7 @@ public class Book implements Serializable {
     @Column(name = "cover_content_type")
     private String coverContentType;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book")
     @JsonIgnore
     private Set<HasBook> borrowers = new HashSet<>();
 

@@ -12,10 +12,6 @@
         <dd>
             <span>{{vm.hasBook.returnDate | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Returned</span></dt>
-        <dd>
-            <span>{{vm.hasBook.returned}}</span>
-        </dd>
         <dt><span>Borrower</span></dt>
         <dd>
             <a ui-sref="borrower-detail({id:vm.hasBook.borrower.id})">{{vm.hasBook.borrower.name}}</a>

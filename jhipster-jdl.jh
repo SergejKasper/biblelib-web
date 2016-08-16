@@ -13,7 +13,6 @@ entity Author {
 entity HasBook {
 	borrowDate LocalDate required
 	returnDate LocalDate required
-    returned Boolean required
 }
 
 entity Borrower {

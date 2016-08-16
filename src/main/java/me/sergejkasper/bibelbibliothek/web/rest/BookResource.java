@@ -35,13 +35,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class BookResource {
 
     private final Logger log = LoggerFactory.getLogger(BookResource.class);
-
+        
     @Inject
     private BookRepository bookRepository;
-
+    
     @Inject
     private BookSearchRepository bookSearchRepository;
-
+    
     /**
      * POST  /books : Create a new book.
      *
@@ -94,7 +94,6 @@ public class BookResource {
      * GET  /books : get all the books.
      *
      * @param pageable the pagination information
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of books in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
@@ -102,17 +101,10 @@ public class BookResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Book>> getAllBooks(Pageable pageable, @RequestParam(required = false) String filter)
+    public ResponseEntity<List<Book>> getAllBooks(Pageable pageable)
         throws URISyntaxException {
-        if ("no-borrowers".equals(filter)) {
-            log.debug("REST request to get all Books where borrower is null");
-            return new ResponseEntity<>(StreamSupport
-                .stream(bookRepository.findAll().spliterator(), false)
-                .filter(book -> book.getBorrowers() != null && book.getBorrowers().isEmpty())
-                .collect(Collectors.toList()), HttpStatus.OK);
-        }
         log.debug("REST request to get a page of Books");
-        Page<Book> page = bookRepository.findAll(pageable);
+        Page<Book> page = bookRepository.findAll(pageable); 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/books");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

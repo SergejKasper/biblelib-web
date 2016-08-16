@@ -51,9 +51,6 @@ public class HasBookResourceIntTest {
     private static final LocalDate DEFAULT_RETURN_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_RETURN_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Boolean DEFAULT_RETURNED = false;
-    private static final Boolean UPDATED_RETURNED = true;
-
     @Inject
     private HasBookRepository hasBookRepository;
 
@@ -87,7 +84,6 @@ public class HasBookResourceIntTest {
         hasBook = new HasBook();
         hasBook.setBorrowDate(DEFAULT_BORROW_DATE);
         hasBook.setReturnDate(DEFAULT_RETURN_DATE);
-        hasBook.setReturned(DEFAULT_RETURNED);
     }
 
     @Test
@@ -108,7 +104,6 @@ public class HasBookResourceIntTest {
         HasBook testHasBook = hasBooks.get(hasBooks.size() - 1);
         assertThat(testHasBook.getBorrowDate()).isEqualTo(DEFAULT_BORROW_DATE);
         assertThat(testHasBook.getReturnDate()).isEqualTo(DEFAULT_RETURN_DATE);
-        assertThat(testHasBook.isReturned()).isEqualTo(DEFAULT_RETURNED);
 
         // Validate the HasBook in ElasticSearch
         HasBook hasBookEs = hasBookSearchRepository.findOne(testHasBook.getId());
@@ -153,24 +148,6 @@ public class HasBookResourceIntTest {
 
     @Test
     @Transactional
-    public void checkReturnedIsRequired() throws Exception {
-        int databaseSizeBeforeTest = hasBookRepository.findAll().size();
-        // set the field null
-        hasBook.setReturned(null);
-
-        // Create the HasBook, which fails.
-
-        restHasBookMockMvc.perform(post("/api/has-books")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(hasBook)))
-                .andExpect(status().isBadRequest());
-
-        List<HasBook> hasBooks = hasBookRepository.findAll();
-        assertThat(hasBooks).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllHasBooks() throws Exception {
         // Initialize the database
         hasBookRepository.saveAndFlush(hasBook);
@@ -181,8 +158,7 @@ public class HasBookResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(hasBook.getId().intValue())))
                 .andExpect(jsonPath("$.[*].borrowDate").value(hasItem(DEFAULT_BORROW_DATE.toString())))
-                .andExpect(jsonPath("$.[*].returnDate").value(hasItem(DEFAULT_RETURN_DATE.toString())))
-                .andExpect(jsonPath("$.[*].returned").value(hasItem(DEFAULT_RETURNED.booleanValue())));
+                .andExpect(jsonPath("$.[*].returnDate").value(hasItem(DEFAULT_RETURN_DATE.toString())));
     }
 
     @Test
@@ -197,8 +173,7 @@ public class HasBookResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(hasBook.getId().intValue()))
             .andExpect(jsonPath("$.borrowDate").value(DEFAULT_BORROW_DATE.toString()))
-            .andExpect(jsonPath("$.returnDate").value(DEFAULT_RETURN_DATE.toString()))
-            .andExpect(jsonPath("$.returned").value(DEFAULT_RETURNED.booleanValue()));
+            .andExpect(jsonPath("$.returnDate").value(DEFAULT_RETURN_DATE.toString()));
     }
 
     @Test
@@ -222,7 +197,6 @@ public class HasBookResourceIntTest {
         updatedHasBook.setId(hasBook.getId());
         updatedHasBook.setBorrowDate(UPDATED_BORROW_DATE);
         updatedHasBook.setReturnDate(UPDATED_RETURN_DATE);
-        updatedHasBook.setReturned(UPDATED_RETURNED);
 
         restHasBookMockMvc.perform(put("/api/has-books")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -235,7 +209,6 @@ public class HasBookResourceIntTest {
         HasBook testHasBook = hasBooks.get(hasBooks.size() - 1);
         assertThat(testHasBook.getBorrowDate()).isEqualTo(UPDATED_BORROW_DATE);
         assertThat(testHasBook.getReturnDate()).isEqualTo(UPDATED_RETURN_DATE);
-        assertThat(testHasBook.isReturned()).isEqualTo(UPDATED_RETURNED);
 
         // Validate the HasBook in ElasticSearch
         HasBook hasBookEs = hasBookSearchRepository.findOne(testHasBook.getId());
@@ -277,7 +250,6 @@ public class HasBookResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hasBook.getId().intValue())))
             .andExpect(jsonPath("$.[*].borrowDate").value(hasItem(DEFAULT_BORROW_DATE.toString())))
-            .andExpect(jsonPath("$.[*].returnDate").value(hasItem(DEFAULT_RETURN_DATE.toString())))
-            .andExpect(jsonPath("$.[*].returned").value(hasItem(DEFAULT_RETURNED.booleanValue())));
+            .andExpect(jsonPath("$.[*].returnDate").value(hasItem(DEFAULT_RETURN_DATE.toString())));
     }
 }
