@@ -1,4 +1,4 @@
-// Generated on 2016-07-31 using generator-jhipster 3.5.1
+// Generated on 2016-08-16 using generator-jhipster 3.5.1
 'use strict';
 
 var gulp = require('gulp'),
@@ -31,6 +31,7 @@ var handleErrors = require('./gulp/handleErrors'),
     util = require('./gulp/utils'),
     build = require('./gulp/build');
 
+var yorc = require('./.yo-rc.json')['generator-jhipster'];
 
 var config = require('./gulp/config');
 
@@ -40,6 +41,10 @@ gulp.task('clean', function () {
 
 gulp.task('copy', function () {
     return es.merge( 
+        gulp.src(config.app + 'i18n/**')
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist + 'i18n/'))
+        .pipe(gulp.dest(config.dist + 'i18n/')),
         gulp.src(config.app + 'content/**/*.{woff,woff2,svg,ttf,eot,otf}')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'content/fonts/'))
@@ -89,6 +94,15 @@ gulp.task('sass', function () {
     );
 });
 
+gulp.task('languages', function () {
+    var locales = yorc.languages.map(function (locale) {
+        return config.bower + 'angular-i18n/angular-locale_' + locale + '.js';
+    });
+    return gulp.src(locales)
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.app + 'i18n/'))
+        .pipe(gulp.dest(config.app + 'i18n/'));
+});
 
 gulp.task('styles', ['sass'], function () {
     return gulp.src(config.app + 'content/css')
@@ -247,7 +261,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('install', function () {
-    runSequence(['inject:dep', 'ngconstant:dev'], 'sass', 'inject:app', 'inject:troubleshoot');
+    runSequence(['inject:dep', 'ngconstant:dev'], 'sass', 'languages', 'inject:app', 'inject:troubleshoot');
 });
 
 gulp.task('serve', function () {
@@ -255,7 +269,7 @@ gulp.task('serve', function () {
 });
 
 gulp.task('build', ['clean'], function (cb) {
-    runSequence(['copy', 'inject:vendor', 'ngconstant:prod'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
+    runSequence(['copy', 'inject:vendor', 'ngconstant:prod', 'languages'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
 });
 
 gulp.task('default', ['serve']);

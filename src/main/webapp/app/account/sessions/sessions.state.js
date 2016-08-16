@@ -13,7 +13,7 @@
             url: '/sessions',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Sessions'
+                pageTitle: 'global.menu.account.sessions'
             },
             views: {
                 'content@': {
@@ -21,6 +21,12 @@
                     controller: 'SessionsController',
                     controllerAs: 'vm'
                 }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('sessions');
+                    return $translate.refresh();
+                }]
             }
         });
     }

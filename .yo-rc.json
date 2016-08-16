@@ -22,6 +22,10 @@
       "gatling"
     ],
     "jhiPrefix": "jhi",
-    "enableTranslation": false
+    "enableTranslation": true,
+    "languages": [
+      "en",
+      "de"
+    ]
   }
 }

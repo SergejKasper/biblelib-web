@@ -14,7 +14,7 @@
             url: '/user-management?page&sort',
             data: {
                 authorities: ['ROLE_ADMIN'],
-                pageTitle: 'BibelBibliothek'
+                pageTitle: 'user-management.home.title'
             },
             views: {
                 'content@': {
@@ -40,14 +40,19 @@
                         predicate: PaginationUtil.parsePredicate($stateParams.sort),
                         ascending: PaginationUtil.parseAscending($stateParams.sort)
                     };
+                }],
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('user-management');
+                    return $translate.refresh();
                 }]
+
             }        })
         .state('user-management-detail', {
             parent: 'admin',
             url: '/user/:login',
             data: {
                 authorities: ['ROLE_ADMIN'],
-                pageTitle: 'BibelBibliothek'
+                pageTitle: 'user-management.detail.title'
             },
             views: {
                 'content@': {
@@ -55,6 +60,12 @@
                     controller: 'UserManagementDetailController',
                     controllerAs: 'vm'
                 }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('user-management');
+                    return $translate.refresh();
+                }]
             }
         })
         .state('user-management.new', {
