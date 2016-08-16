@@ -35,13 +35,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class BorrowerResource {
 
     private final Logger log = LoggerFactory.getLogger(BorrowerResource.class);
-        
+
     @Inject
     private BorrowerRepository borrowerRepository;
-    
+
     @Inject
     private BorrowerSearchRepository borrowerSearchRepository;
-    
+
     /**
      * POST  /borrowers : Create a new borrower.
      *
@@ -104,7 +104,7 @@ public class BorrowerResource {
     public ResponseEntity<List<Borrower>> getAllBorrowers(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Borrowers");
-        Page<Borrower> page = borrowerRepository.findAll(pageable); 
+        Page<Borrower> page = borrowerRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/borrowers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

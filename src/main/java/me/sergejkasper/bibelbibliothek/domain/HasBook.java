@@ -1,5 +1,6 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -31,9 +32,11 @@ public class HasBook implements Serializable {
     private LocalDate returnDate;
 
     @ManyToOne
+    @JsonBackReference
     private Borrower borrower;
 
     @ManyToOne
+    @JsonBackReference
     private Book book;
 
     public Long getId() {

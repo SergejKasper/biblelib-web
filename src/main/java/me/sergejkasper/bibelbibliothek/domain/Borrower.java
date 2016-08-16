@@ -1,6 +1,8 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -35,8 +37,8 @@ public class Borrower implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "borrower")
-    @JsonIgnore
+    @OneToMany(mappedBy = "borrower", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<HasBook> books = new HashSet<>();
 
     public Long getId() {
