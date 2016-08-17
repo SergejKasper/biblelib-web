@@ -1,12 +1,12 @@
 <div>
-    <h2>Books</h2>
+    <h2 translate="bibelBibliothekApp.book.home.title">Books</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="book.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs" >
+                    <span class="hidden-xs"  translate="bibelBibliothekApp.book.home.createLabel">
                         Create new Book
                     </span>
                 </button>
@@ -14,7 +14,7 @@
             <div class="col-xs-8 no-padding-right">
                 <form name="searchForm" class="form-inline">
                     <div class="input-group pull-right" >
-                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="Query">
+                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="{{ 'bibelBibliothekApp.book.home.search' | translate }}">
                         <span  class="input-group-btn width-min" >
                             <button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -35,13 +35,13 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="bookIsbn"><span>Book Isbn</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="description"><span>Description</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="language"><span>Language</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="cover"><span>Cover</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="author.name"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bookIsbn"><span translate="bibelBibliothekApp.book.bookIsbn">Book Isbn</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="title"><span translate="bibelBibliothekApp.book.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="description"><span translate="bibelBibliothekApp.book.description">Description</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="language"><span translate="bibelBibliothekApp.book.language">Language</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cover"><span translate="bibelBibliothekApp.book.cover">Cover</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="author.name"><span translate="bibelBibliothekApp.book.author">Author</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,10 +51,10 @@
                     <td>{{book.bookIsbn}}</td>
                     <td>{{book.title}}</td>
                     <td>{{book.description}}</td>
-                    <td>{{book.language}}</td>
+                    <td translate="{{'bibelBibliothekApp.Language.' + book.language}}">{{book.language}}</td>
                     <td>
                         <a ng-if="book.cover" ng-click="vm.openFile(book.coverContentType, book.cover)">
-                            <img data-ng-src="{{'data:' + book.coverContentType + ';base64,' + book.cover}}" style="max-height: 30px;"/>
+                            <img data-ng-src="{{book.cover}}" style="max-height: 30px;"/>
                         </a>
                         <span ng-if="book.cover">{{book.coverContentType}}, {{vm.byteSize(book.cover)}}</span>
                     </td>
@@ -67,19 +67,19 @@
                                     ui-sref="book-detail({id:book.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="book.edit({id:book.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="book.delete({id:book.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>

@@ -1,12 +1,12 @@
 <div>
-    <h2>Has Books</h2>
+    <h2 translate="bibelBibliothekApp.hasBook.home.title">Has Books</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="has-book.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs" >
+                    <span class="hidden-xs"  translate="bibelBibliothekApp.hasBook.home.createLabel">
                         Create new Has Book
                     </span>
                 </button>
@@ -14,7 +14,7 @@
             <div class="col-xs-8 no-padding-right">
                 <form name="searchForm" class="form-inline">
                     <div class="input-group pull-right" >
-                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="Query">
+                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="{{ 'bibelBibliothekApp.hasBook.home.search' | translate }}">
                         <span  class="input-group-btn width-min" >
                             <button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -35,16 +35,16 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="borrowDate"><span>Borrow Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="returnDate"><span>Return Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="borrower.name"><span>Borrower</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="book.title"><span>Book</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="borrowDate"><span translate="bibelBibliothekApp.hasBook.borrowDate">Borrow Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="returnDate"><span translate="bibelBibliothekApp.hasBook.returnDate">Return Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="borrower.name"><span translate="bibelBibliothekApp.hasBook.borrower">Borrower</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="book.title"><span translate="bibelBibliothekApp.hasBook.book">Book</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="hasBook in vm.hasBooks track by hasBook.id">
+                <tr ng-repeat="hasBook in vm.hasBooks track by hasBook.id" ng-class="vm.getBorrowingStateColor(hasBook.returnDate);">
                     <td><a ui-sref="has-book-detail({id:hasBook.id})">{{hasBook.id}}</a></td>
                         <td>{{hasBook.borrowDate | date:'mediumDate'}}</td>
                         <td>{{hasBook.returnDate | date:'mediumDate'}}</td>
@@ -60,19 +60,13 @@
                                     ui-sref="has-book-detail({id:hasBook.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="has-book.edit({id:hasBook.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="has-book.delete({id:hasBook.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm"></span>
+                                    class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-log-in"></span>
+                                <span class="hidden-xs hidden-sm" translate="bibelBibliothekApp.hasBook.action.return"></span>
                             </button>
                         </div>
                     </td>

@@ -1,22 +1,22 @@
 
 <div>
-    <h2><span>Has Book</span> {{vm.hasBook.id}}</h2>
+    <h2><span translate="bibelBibliothekApp.hasBook.detail.title">Has Book</span> {{vm.hasBook.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Borrow Date</span></dt>
+        <dt><span translate="bibelBibliothekApp.hasBook.borrowDate">Borrow Date</span></dt>
         <dd>
             <span>{{vm.hasBook.borrowDate | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Return Date</span></dt>
+        <dt><span translate="bibelBibliothekApp.hasBook.returnDate">Return Date</span></dt>
         <dd>
             <span>{{vm.hasBook.returnDate | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Borrower</span></dt>
+        <dt><span translate="bibelBibliothekApp.hasBook.borrower">Borrower</span></dt>
         <dd>
             <a ui-sref="borrower-detail({id:vm.hasBook.borrower.id})">{{vm.hasBook.borrower.name}}</a>
         </dd>
-        <dt><span>Book</span></dt>
+        <dt><span translate="bibelBibliothekApp.hasBook.book">Book</span></dt>
         <dd>
             <a ui-sref="book-detail({id:vm.hasBook.book.id})">{{vm.hasBook.book.title}}</a>
         </dd>
@@ -25,11 +25,11 @@
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
     </button>
 
     <button type="button" ui-sref="has-book-detail.edit({id:vm.hasBook.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Edit</span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
     </button>
 </div>

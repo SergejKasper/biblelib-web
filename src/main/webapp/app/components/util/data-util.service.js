@@ -58,8 +58,8 @@
             return formatAsBytes(size(base64String));
         }
 
-        function openFile (type, data) {
-            $window.open('data:' + type + ';base64,' + data, '_blank', 'height=300,width=400');
+        function openFile (type, url) {
+            $window.open(url, '_blank', 'height=300,width=400');
         }
 
         function toBase64 (file, cb) {

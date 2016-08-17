@@ -14,7 +14,7 @@
             url: '/borrower',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Borrowers'
+                pageTitle: 'bibelBibliothekApp.borrower.home.title'
             },
             views: {
                 'content@': {
@@ -24,6 +24,11 @@
                 }
             },
             resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('borrower');
+                    $translatePartialLoader.addPart('global');
+                    return $translate.refresh();
+                }]
             }
         })
         .state('borrower-detail', {
@@ -31,7 +36,7 @@
             url: '/borrower/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Borrower'
+                pageTitle: 'bibelBibliothekApp.borrower.detail.title'
             },
             views: {
                 'content@': {
@@ -41,6 +46,10 @@
                 }
             },
             resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('borrower');
+                    return $translate.refresh();
+                }],
                 entity: ['$stateParams', 'Borrower', function($stateParams, Borrower) {
                     return Borrower.get({id : $stateParams.id}).$promise;
                 }],

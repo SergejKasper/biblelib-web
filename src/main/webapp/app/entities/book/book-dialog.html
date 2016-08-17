@@ -1,64 +1,80 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myBookLabel">Create or edit a Book</h4>
+        <h4 class="modal-title" id="myBookLabel" translate="bibelBibliothekApp.book.home.createOrEditLabel">Create or
+            edit a Book</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.book.id">
-            <label for="id">ID</label>
+            <label for="id" translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.book.id" readonly />
+                   ng-model="vm.book.id" readonly/>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_bookIsbn">Book Isbn</label>
-            <input type="number" class="form-control" name="bookIsbn" id="field_bookIsbn"
-                    ng-model="vm.book.bookIsbn"
-                     />
+            <label class="control-label" translate="bibelBibliothekApp.book.bookIsbn" for="field_bookIsbn">Book
+                Isbn</label>
+
+            <div class="input-group">
+                <input type="number" class="form-control" name="bookIsbn" id="field_bookIsbn"
+                       ng-model="vm.book.bookIsbn"
+                    />
+                <span class="input-group-btn">
+                <input type="button" class="btn btn-default" ng-click="vm.getBookInfo()">
+                     <span translate="entity.action.save">Save</span>
+                    </input>
+                </span>
+            </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_title">Title</label>
+            <label class="control-label" translate="bibelBibliothekApp.book.title" for="field_title">Title</label>
             <input type="text" class="form-control" name="title" id="field_title"
-                    ng-model="vm.book.title"
-                    required ng-maxlength="80" />
+                   ng-model="vm.book.title"
+                   required ng-maxlength="80"/>
+
             <div ng-show="editForm.title.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.title.$error.required">
+                   ng-show="editForm.title.$error.required" translate="entity.validation.required">
                     This field is required.
                 </p>
+
                 <p class="help-block"
-                    ng-show="editForm.title.$error.maxlength">
+                   ng-show="editForm.title.$error.maxlength" translate="entity.validation.maxlength"
+                   translate-value-max="80">
                     This field cannot be longer than 80 characters.
                 </p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description"
-                    ng-model="vm.book.description"
-                    ng-maxlength="255" />
+            <label class="control-label" translate="bibelBibliothekApp.book.description" for="field_description">Description</label>
+            <textarea rows="4" class="form-control" name="description" id="field_description"
+                      ng-model="vm.book.description"
+                      ng-maxlength="255"/>
             <div ng-show="editForm.description.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.description.$error.maxlength">
+                   ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength"
+                   translate-value-max="255">
                     This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_language">Language</label>
+            <label class="control-label" translate="bibelBibliothekApp.book.language"
+                   for="field_language">Language</label>
             <select class="form-control" name="language" ng-model="vm.book.language" id="field_language">
-                <option value="DEUTSCH">DEUTSCH</option>
-                <option value="ENGLISCH">ENGLISCH</option>
-                <option value="RUSSISCH">RUSSISCH</option>
+                <option value="DEUTSCH" translate="bibelBibliothekApp.Language.DEUTSCH">DEUTSCH</option>
+                <option value="ENGLISCH" translate="bibelBibliothekApp.Language.ENGLISCH">ENGLISCH</option>
+                <option value="RUSSISCH" translate="bibelBibliothekApp.Language.RUSSISCH">RUSSISCH</option>
             </select>
         </div>
-        <div class="form-group" ngf-drop ngf-change="vm.setCover($file, vm.book)" ngf-pattern="'image/*'">
-            <label class="control-label" for="field_cover">Cover</label>
+
+        <div class="form-group" ngf-drop ngf-change="vm.setCover($file, vm.book)" ngf-pattern="'*'">
+            <label class="control-label" translate="bibelBibliothekApp.book.cover" for="field_cover">Cover</label>
+
             <div>
-                <img data-ng-src="{{'data:' + vm.book.coverContentType + ';base64,' + vm.book.cover}}" style="max-height: 100px;" ng-if="vm.book.cover"/>
+                <img data-ng-src="{{vm.book.cover}}" onerror="this.style.display='block !important'" style="max-height: 100px; display: block !important;"/>
                 <div ng-if="vm.book.cover" class="help-block clearfix">
                     <span class="pull-left">{{vm.book.coverContentType}}, {{vm.byteSize(vm.book.cover)}}</span>
                     <button ng-click="vm.book.cover=null;vm.book.coverContentType=null;"
@@ -67,30 +83,32 @@
                     </button>
                 </div>
                 <button type="file" ngf-select class="btn btn-default btn-block"
-                        ngf-change="vm.setCover($file, vm.book)" accept="image/*">
+                        ngf-change="vm.setCover($file, vm.book)" accept="image/*" translate="entity.action.addimage">
                     Add image
                 </button>
             </div>
             <input type="hidden" class="form-control" name="cover" id="field_cover"
-                    ng-model="vm.book.cover"
-                     />
+                   ng-model="vm.book.cover"
+                />
             <input type="hidden" class="form-control" name="coverContentType" id="field_coverContentType"
-                    ng-model="vm.book.coverContentType" />
+                   ng-model="vm.book.coverContentType"/>
         </div>
 
         <div class="form-group">
-            <label for="field_author">Author</label>
-            <select class="form-control" id="field_author" name="author" ng-model="vm.book.author" ng-options="author as author.name for author in vm.authors track by author.id">
+            <label translate="bibelBibliothekApp.book.author" for="field_author">Author</label>
+            <select class="form-control" id="field_author" name="author" ng-model="vm.book.author"
+                    ng-options="author as author.name for author in vm.authors track by author.id">
                 <option value=""></option>
             </select>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

@@ -9,14 +9,28 @@
 
     function HasBookController ($scope, $state, HasBook, HasBookSearch, ParseLinks, AlertService) {
         var vm = this;
-        
+
         vm.hasBooks = [];
         vm.loadPage = loadPage;
         vm.page = 0;
         vm.links = {
             last: 0
         };
-        vm.predicate = 'id';
+        vm.now = (new Date()).valueOf();
+        vm.getBorrowingStateColor = function(date){
+            var dateInt = (new Date(date)).valueOf();
+            if(dateInt < vm.now){
+            //return date passed
+                return 'danger';
+            } else if (dateInt < (vm.now + 604800000)) {
+            //return date in less than a week
+                return 'warning';
+            } else {
+            //more than a week remaining
+                return '';
+            }
+        }
+        vm.predicate = 'returnDate';
         vm.reset = reset;
         vm.reverse = true;
         vm.clear = clear;

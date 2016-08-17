@@ -14,7 +14,7 @@
             url: '/book',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Books'
+                pageTitle: 'bibelBibliothekApp.book.home.title'
             },
             views: {
                 'content@': {
@@ -24,6 +24,12 @@
                 }
             },
             resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('book');
+                    $translatePartialLoader.addPart('language');
+                    $translatePartialLoader.addPart('global');
+                    return $translate.refresh();
+                }]
             }
         })
         .state('book-detail', {
@@ -31,7 +37,7 @@
             url: '/book/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Book'
+                pageTitle: 'bibelBibliothekApp.book.detail.title'
             },
             views: {
                 'content@': {
@@ -41,6 +47,11 @@
                 }
             },
             resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('book');
+                    $translatePartialLoader.addPart('language');
+                    return $translate.refresh();
+                }],
                 entity: ['$stateParams', 'Book', function($stateParams, Book) {
                     return Book.get({id : $stateParams.id}).$promise;
                 }],
