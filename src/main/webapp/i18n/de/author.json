@@ -1,0 +1,23 @@
+{
+    "bibelBibliothekApp": {
+        "author" : {
+            "home": {
+                "title": "Autoren",
+                "createLabel": "Autor erstellen",
+                "createOrEditLabel": "Autor erstellen oder bearbeiten",
+                "search": "Suche nach Autor"
+            },
+            "created": "Autor erstellt mit ID {{ param }}",
+            "updated": "Autor aktualisiert mit ID {{ param }}",
+            "deleted": "Autor gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Autor {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Autor"
+            },
+            "name": "Name",
+            "book": "Book"
+        }
+    }
+}

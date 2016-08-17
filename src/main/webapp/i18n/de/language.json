@@ -1,0 +1,10 @@
+{
+    "bibelBibliothekApp": {
+        "Language" : {
+            "null": "",
+            "DEUTSCH": "DEUTSCH",
+            "ENGLISCH": "ENGLISCH",
+            "RUSSISCH": "RUSSISCH"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "bibelBibliothekApp": {
+        "hasBook" : {
+            "home": {
+                "title": "Derzeit Geliehen",
+                "createLabel": "Buch verleihen",
+                "createOrEditLabel": "Buch verleihen oder Verleih anpassen",
+                "search": "Suche nach Has Book"
+            },
+            "created": "Verleih-Eintrag erstellt mit ID {{ param }}",
+            "updated": "Verleih-Eintrag  aktualisiert mit ID {{ param }}",
+            "deleted": "Verleih-Eintrag  gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Ist das Buch zum Eintrag {{ id }} zurückgegeben worden?"
+            },
+            "detail": {
+                "title": "Verleih-Eintrag"
+            },
+            "borrowDate": "Am",
+            "returnDate": "Bis",
+            "borrower": "Ausleiher",
+            "book": "Buch",
+            "action": {
+                "return": "Rückgabe"
+            }
+        }
+    }
+}

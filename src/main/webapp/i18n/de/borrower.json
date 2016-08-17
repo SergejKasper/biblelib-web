@@ -1,0 +1,25 @@
+{
+    "bibelBibliothekApp": {
+        "borrower" : {
+            "home": {
+                "title": "Ausleiher",
+                "createLabel": "Ausleiher erstellen",
+                "createOrEditLabel": "Ausleiher erstellen oder bearbeiten",
+                "search": "Suche nach Ausleiher"
+            },
+            "created": "Ausleiher erstellt mit ID {{ param }}",
+            "updated": "Ausleiher aktualisiert mit ID {{ param }}",
+            "deleted": "Ausleiher gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Ausleiher {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Ausleiher"
+            },
+            "name": "Name",
+            "email": "Email",
+            "phoneNumber": "Telefon Nummer",
+            "book": "Buch"
+        }
+    }
+}

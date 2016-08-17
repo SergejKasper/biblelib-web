@@ -1,0 +1,28 @@
+{
+    "bibelBibliothekApp": {
+        "book" : {
+            "home": {
+                "title": "Bücher",
+                "createLabel": "Buch erstellen",
+                "createOrEditLabel": "Buch erstellen oder bearbeiten",
+                "search": "Suche nach Buch"
+            },
+            "created": "Buch erstellt mit ID {{ param }}",
+            "updated": "Buch aktualisiert mit ID {{ param }}",
+            "deleted": "Buch gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Buch {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Buch"
+            },
+            "bookIsbn": "Buch Isbn",
+            "title": "Titel",
+            "description": "Beschreibung",
+            "language": "Sprache",
+            "cover": "Cover",
+            "borrower": "Ausleiher",
+            "author": "Autor"
+        }
+    }
+}
