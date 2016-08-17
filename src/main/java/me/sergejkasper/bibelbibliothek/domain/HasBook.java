@@ -17,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "has_book")
 @Document(indexName = "hasbook")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = HasBook.class)
 public class HasBook implements Serializable {
 
     private static final long serialVersionUID = 1L;

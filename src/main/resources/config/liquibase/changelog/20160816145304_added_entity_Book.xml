@@ -13,6 +13,10 @@
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
+    <property name="clobType" value="clob" dbms="oracle"/>
+    <property name="clobType" value="longtext" dbms="mysql, postgresql, h2"/>
+
+
     <!--
         Added the entity Book.
     -->
@@ -24,32 +28,32 @@
             <column name="book_isbn" type="bigint">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="title" type="varchar(80)">
                 <constraints nullable="false" />
             </column>
-            
-            <column name="description" type="varchar(255)">
+
+            <column name="description" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="language" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="cover" type="longblob">
                 <constraints nullable="true" />
             </column>
             <column name="cover_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="author_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

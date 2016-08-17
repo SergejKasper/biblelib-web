@@ -1,8 +1,5 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -22,7 +19,7 @@ import me.sergejkasper.bibelbibliothek.domain.enumeration.Language;
 @Entity
 @Table(name = "book")
 @Document(indexName = "book")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope=Book.class)
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,11 +34,11 @@ public class Book implements Serializable {
     @NotNull
     @Size(max = 80)
     @Column(name = "title", length = 80, nullable = false)
-    @JsonProperty("title")
     private String title;
 
-    @Size(max = 255)
-    @Column(name = "description", length = 255)
+
+    @Lob
+    @Column(name = "description")
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +47,7 @@ public class Book implements Serializable {
 
     @Lob
     @Column(name = "cover")
-    private byte[] cover;
+    private String cover;
 
     @Column(name = "cover_content_type")
     private String coverContentType;
@@ -101,11 +98,11 @@ public class Book implements Serializable {
         this.language = language;
     }
 
-    public byte[] getCover() {
+    public String getCover() {
         return cover;
     }
 
-    public void setCover(byte[] cover) {
+    public void setCover(String cover) {
         this.cover = cover;
     }
 

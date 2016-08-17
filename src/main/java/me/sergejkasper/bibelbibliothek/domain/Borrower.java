@@ -1,10 +1,5 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import me.sergejkasper.bibelbibliothek.web.rest.HasBookSerializer;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -22,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "borrower")
 @Document(indexName = "borrower")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope=Borrower.class)
 public class Borrower implements Serializable {
 
     private static final long serialVersionUID = 1L;
