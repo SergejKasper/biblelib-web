@@ -1,6 +1,8 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -22,10 +24,12 @@ public class Author implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Public.class)
     private Long id;
 
     @Size(max = 40)
     @Column(name = "name", length = 40)
+    @JsonView(Views.Public.class)
     private String name;
 
     @OneToMany(mappedBy = "author")

@@ -1,11 +1,13 @@
 package me.sergejkasper.bibelbibliothek.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonView;
 import me.sergejkasper.bibelbibliothek.domain.Borrower;
 import me.sergejkasper.bibelbibliothek.repository.BorrowerRepository;
 import me.sergejkasper.bibelbibliothek.repository.search.BorrowerSearchRepository;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -49,6 +51,7 @@ public class BorrowerResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new borrower, or with status 400 (Bad Request) if the borrower has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/borrowers",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,6 +77,7 @@ public class BorrowerResource {
      * or with status 500 (Internal Server Error) if the borrower couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/borrowers",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,6 +101,7 @@ public class BorrowerResource {
      * @return the ResponseEntity with status 200 (OK) and the list of borrowers in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/borrowers",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -115,6 +120,7 @@ public class BorrowerResource {
      * @param id the id of the borrower to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the borrower, or with status 404 (Not Found)
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/borrowers/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -135,6 +141,7 @@ public class BorrowerResource {
      * @param id the id of the borrower to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/borrowers/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -153,6 +160,7 @@ public class BorrowerResource {
      * @param query the query of the borrower search
      * @return the result of the search
      */
+    @JsonView(Views.Borrower.class)
     @RequestMapping(value = "/_search/borrowers",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,7 +1,9 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -17,27 +19,31 @@ import java.util.Objects;
 @Entity
 @Table(name = "borrower")
 @Document(indexName = "borrower")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope=Borrower.class)
 public class Borrower implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Public.class)
     private Long id;
 
     @NotNull
     @Size(max = 40)
     @Column(name = "name", length = 40, nullable = false)
+    @JsonView(Views.Public.class)
     private String name;
 
     @Column(name = "email")
+    @JsonView(Views.Public.class)
     private String email;
 
     @Column(name = "phone_number")
+    @JsonView(Views.Public.class)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "borrower", fetch = FetchType.EAGER)
+    @JsonView(Views.Borrower.class)
     private Set<HasBook> books = new HashSet<>();
 
     public Long getId() {

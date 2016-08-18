@@ -1,7 +1,7 @@
 package me.sergejkasper.bibelbibliothek.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -19,43 +19,51 @@ import me.sergejkasper.bibelbibliothek.domain.enumeration.Language;
 @Entity
 @Table(name = "book")
 @Document(indexName = "book")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope=Book.class)
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Public.class)
     private Long id;
 
     @Column(name = "book_isbn")
+    @JsonView(Views.Public.class)
     private Long bookIsbn;
 
     @NotNull
     @Size(max = 80)
     @Column(name = "title", length = 80, nullable = false)
+    @JsonView(Views.Public.class)
     private String title;
 
 
     @Lob
     @Column(name = "description")
+    @JsonView(Views.Public.class)
     private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "language")
+    @JsonView(Views.Public.class)
     private Language language;
 
     @Lob
     @Column(name = "cover")
+    @JsonView(Views.Public.class)
     private String cover;
 
     @Column(name = "cover_content_type")
+    @JsonView(Views.Public.class)
     private String coverContentType;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @JsonView(Views.Book.class)
     private Set<HasBook> borrowers = new HashSet<>();
 
     @ManyToOne
+    @JsonView(Views.Public.class)
     private Author author;
 
     public Long getId() {

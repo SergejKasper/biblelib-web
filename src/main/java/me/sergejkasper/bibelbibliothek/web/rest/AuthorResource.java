@@ -1,11 +1,13 @@
 package me.sergejkasper.bibelbibliothek.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonView;
 import me.sergejkasper.bibelbibliothek.domain.Author;
 import me.sergejkasper.bibelbibliothek.repository.AuthorRepository;
 import me.sergejkasper.bibelbibliothek.repository.search.AuthorSearchRepository;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -35,13 +37,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class AuthorResource {
 
     private final Logger log = LoggerFactory.getLogger(AuthorResource.class);
-        
+
     @Inject
     private AuthorRepository authorRepository;
-    
+
     @Inject
     private AuthorSearchRepository authorSearchRepository;
-    
+
     /**
      * POST  /authors : Create a new author.
      *
@@ -49,6 +51,7 @@ public class AuthorResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new author, or with status 400 (Bad Request) if the author has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/authors",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,6 +77,7 @@ public class AuthorResource {
      * or with status 500 (Internal Server Error) if the author couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/authors",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,6 +101,7 @@ public class AuthorResource {
      * @return the ResponseEntity with status 200 (OK) and the list of authors in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/authors",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,7 +109,7 @@ public class AuthorResource {
     public ResponseEntity<List<Author>> getAllAuthors(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Authors");
-        Page<Author> page = authorRepository.findAll(pageable); 
+        Page<Author> page = authorRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/authors");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -115,6 +120,7 @@ public class AuthorResource {
      * @param id the id of the author to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the author, or with status 404 (Not Found)
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/authors/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -135,6 +141,7 @@ public class AuthorResource {
      * @param id the id of the author to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/authors/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -153,6 +160,7 @@ public class AuthorResource {
      * @param query the query of the author search
      * @return the result of the search
      */
+    @JsonView(Views.Public.class)
     @RequestMapping(value = "/_search/authors",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)

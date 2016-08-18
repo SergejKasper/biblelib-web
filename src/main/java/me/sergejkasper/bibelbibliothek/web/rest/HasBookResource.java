@@ -1,11 +1,13 @@
 package me.sergejkasper.bibelbibliothek.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonView;
 import me.sergejkasper.bibelbibliothek.domain.HasBook;
 import me.sergejkasper.bibelbibliothek.repository.HasBookRepository;
 import me.sergejkasper.bibelbibliothek.repository.search.HasBookSearchRepository;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.swing.text.View;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,13 +38,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class HasBookResource {
 
     private final Logger log = LoggerFactory.getLogger(HasBookResource.class);
-        
+
     @Inject
     private HasBookRepository hasBookRepository;
-    
+
     @Inject
     private HasBookSearchRepository hasBookSearchRepository;
-    
+
     /**
      * POST  /has-books : Create a new hasBook.
      *
@@ -49,6 +52,7 @@ public class HasBookResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new hasBook, or with status 400 (Bad Request) if the hasBook has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/has-books",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,6 +78,7 @@ public class HasBookResource {
      * or with status 500 (Internal Server Error) if the hasBook couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/has-books",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,6 +102,7 @@ public class HasBookResource {
      * @return the ResponseEntity with status 200 (OK) and the list of hasBooks in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/has-books",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,7 +110,7 @@ public class HasBookResource {
     public ResponseEntity<List<HasBook>> getAllHasBooks(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of HasBooks");
-        Page<HasBook> page = hasBookRepository.findAll(pageable); 
+        Page<HasBook> page = hasBookRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/has-books");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -115,6 +121,7 @@ public class HasBookResource {
      * @param id the id of the hasBook to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the hasBook, or with status 404 (Not Found)
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/has-books/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -135,6 +142,7 @@ public class HasBookResource {
      * @param id the id of the hasBook to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/has-books/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -153,6 +161,7 @@ public class HasBookResource {
      * @param query the query of the hasBook search
      * @return the result of the search
      */
+    @JsonView(Views.HasBook.class)
     @RequestMapping(value = "/_search/has-books",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -167,3 +176,4 @@ public class HasBookResource {
 
 
 }
+

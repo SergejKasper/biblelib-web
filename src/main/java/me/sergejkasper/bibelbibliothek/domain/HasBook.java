@@ -2,7 +2,10 @@ package me.sergejkasper.bibelbibliothek.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -17,27 +20,31 @@ import java.util.Objects;
 @Entity
 @Table(name = "has_book")
 @Document(indexName = "hasbook")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id", scope = HasBook.class)
 public class HasBook implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Public.class)
     private Long id;
 
     @NotNull
     @Column(name = "borrow_date", nullable = false)
+    @JsonView(Views.Public.class)
     private LocalDate borrowDate;
 
     @NotNull
     @Column(name = "return_date", nullable = false)
+    @JsonView(Views.Public.class)
     private LocalDate returnDate;
 
     @ManyToOne
+    @JsonView(Views.HasBook.class)
     private Borrower borrower;
 
     @ManyToOne
+    @JsonView(Views.HasBook.class)
     private Book book;
 
     public Long getId() {
@@ -71,6 +78,7 @@ public class HasBook implements Serializable {
     public void setBorrower(Borrower borrower) {
         this.borrower = borrower;
     }
+
 
     public Book getBook() {
         return book;

@@ -1,11 +1,13 @@
 package me.sergejkasper.bibelbibliothek.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonView;
 import me.sergejkasper.bibelbibliothek.domain.Book;
 import me.sergejkasper.bibelbibliothek.repository.BookRepository;
 import me.sergejkasper.bibelbibliothek.repository.search.BookSearchRepository;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
+import me.sergejkasper.bibelbibliothek.web.views.Views;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -49,12 +51,14 @@ public class BookResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new book, or with status 400 (Bad Request) if the book has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/books",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) throws URISyntaxException {
         log.debug("REST request to save Book : {}", book);
+        book.setBorrowers(null);
         if (book.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("book", "idexists", "A new book cannot already have an ID")).body(null);
         }
@@ -74,12 +78,14 @@ public class BookResource {
      * or with status 500 (Internal Server Error) if the book couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/books",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Book> updateBook(@Valid @RequestBody Book book) throws URISyntaxException {
         log.debug("REST request to update Book : {}", book);
+        book.setBorrowers(null);
         if (book.getId() == null) {
             return createBook(book);
         }
@@ -98,6 +104,7 @@ public class BookResource {
      * @return the ResponseEntity with status 200 (OK) and the list of books in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/books",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -123,6 +130,7 @@ public class BookResource {
      * @param id the id of the book to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the book, or with status 404 (Not Found)
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/books/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -143,6 +151,7 @@ public class BookResource {
      * @param id the id of the book to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/books/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -161,6 +170,7 @@ public class BookResource {
      * @param query the query of the book search
      * @return the result of the search
      */
+    @JsonView(Views.Book.class)
     @RequestMapping(value = "/_search/books",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
