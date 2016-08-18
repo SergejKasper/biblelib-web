@@ -39,14 +39,16 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket/tracker")
+        registry.addEndpoint("/addBook/websocket").setAllowedOrigins("*");
+
+        registry.addEndpoint("/websocket/tracker").setAllowedOrigins("*")
             .setHandshakeHandler(new DefaultHandshakeHandler() {
                 @Override
                 protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
                     Principal principal = request.getPrincipal();
                     if (principal == null) {
                         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+                        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ADMIN));
                         principal = new AnonymousAuthenticationToken("WebsocketConfiguration", "anonymous", authorities);
                     }
                     return principal;

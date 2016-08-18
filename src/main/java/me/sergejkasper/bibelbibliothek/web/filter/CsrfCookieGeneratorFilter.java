@@ -31,6 +31,13 @@ public class CsrfCookieGeneratorFilter extends OncePerRequestFilter {
             cookie.setPath("/");
             response.addCookie(cookie);
         }
+
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Origin", request.getHeader("ORIGIN"));
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "86400"); // 24 Hours
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-auth-token");
+
         filterChain.doFilter(request, response);
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import me.sergejkasper.bibelbibliothek.domain.Book;
 import me.sergejkasper.bibelbibliothek.repository.BookRepository;
 import me.sergejkasper.bibelbibliothek.repository.search.BookSearchRepository;
+import me.sergejkasper.bibelbibliothek.security.AuthoritiesConstants;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
 import me.sergejkasper.bibelbibliothek.web.views.Views;
@@ -16,6 +17,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -56,6 +60,8 @@ public class BookResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @MessageMapping("/addBook")
+    @SendTo("/topic/addingBooks")
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) throws URISyntaxException {
         log.debug("REST request to save Book : {}", book);
         book.setBorrowers(null);
@@ -155,6 +161,7 @@ public class BookResource {
     @RequestMapping(value = "/books/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(AuthoritiesConstants.ANONYMOUS)
     @Timed
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         log.debug("REST request to delete Book : {}", id);
