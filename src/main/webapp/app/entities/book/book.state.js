@@ -92,9 +92,12 @@
         })
         .state('book.new', {
             parent: 'book',
-            url: '/new',
+            url: '/new?isbn',
             data: {
                 authorities: ['ROLE_USER']
+            },
+            params: {
+                isbn: null
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

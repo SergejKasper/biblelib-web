@@ -5,9 +5,9 @@
         .module('bibelBibliothekApp')
         .controller('BookDialogController', BookDialogController);
 
-    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author', '$http'];
+    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author', '$http', 'AlertService'];
 
-    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, HasBook, Author, $http) {
+    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, HasBook, Author, $http, AlertService) {
         var vm = this;
 
         vm.book = entity;
@@ -22,6 +22,10 @@
             if(!vm.book.bookIsbn.length === 13 || !vm.book.bookIsbn.length === 10 ) return;
             vm.isSaving = true;
             $http.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + vm.book.bookIsbn).then(function(res){
+                if(!res.data.items){
+                    AlertService.error("Keine passenden Bücher gefunden.");
+                    return;
+                }
                 var resp = res.data.items[0];
                 if (resp){
                     vm.book.title = resp.volumeInfo.title;
@@ -64,6 +68,11 @@
                 alert(err);
             })
         };
+
+        if($stateParams.isbn){
+            vm.book.bookIsbn = $stateParams.isbn;
+            vm.getBookInfo();
+        }
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -9,6 +9,7 @@ import me.sergejkasper.bibelbibliothek.security.AuthoritiesConstants;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
 import me.sergejkasper.bibelbibliothek.web.views.Views;
+import me.sergejkasper.bibelbibliothek.web.websocket.dto.IsbnDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,9 @@ public class BookResource {
     @Inject
     private BookSearchRepository bookSearchRepository;
 
+    @Inject
+    SimpMessageSendingOperations messagingTemplate;
+
     /**
      * POST  /books : Create a new book.
      *
@@ -60,7 +64,6 @@ public class BookResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @MessageMapping("/addBook")
     @SendTo("/topic/addingBooks")
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) throws URISyntaxException {
         log.debug("REST request to save Book : {}", book);
@@ -70,6 +73,7 @@ public class BookResource {
         }
         Book result = bookRepository.save(book);
         bookSearchRepository.save(result);
+        messagingTemplate.convertAndSend("/topic/addingBooks", new IsbnDTO("9781418589141", IsbnDTO.Action.NEW));
         return ResponseEntity.created(new URI("/api/books/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("book", result.getId().toString()))
             .body(result);

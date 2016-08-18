@@ -5,9 +5,9 @@
         .module('bibelBibliothekApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService', 'InteractionService', 'NavigationService'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService) {
+    function NavbarController ($state, Auth, Principal, ProfileService, LoginService, InteractionService, NavigationService) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -17,6 +17,10 @@
             vm.inProduction = response.inProduction;
             vm.swaggerEnabled = response.swaggerEnabled;
         });
+
+        /*InteractionService.receive().then(null, null, function(activity) {
+           alert(JSON.stringify(activity))
+        });*/
 
         vm.login = login;
         vm.logout = logout;

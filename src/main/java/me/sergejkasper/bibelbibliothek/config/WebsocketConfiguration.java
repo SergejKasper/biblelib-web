@@ -35,11 +35,23 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
+        //config.enableSimpleBroker("/websocket/addBook");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/addBook/websocket").setAllowedOrigins("*");
+        registry.addEndpoint("/websocket/addBook").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler() {
+            @Override
+            protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+                Principal principal = request.getPrincipal();
+                if (principal == null) {
+                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+                    principal = new AnonymousAuthenticationToken("WebsocketConfiguration", "anonymous", authorities);
+                }
+                return principal;
+            }
+        }).withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
 
         registry.addEndpoint("/websocket/tracker").setAllowedOrigins("*")
             .setHandshakeHandler(new DefaultHandshakeHandler() {
