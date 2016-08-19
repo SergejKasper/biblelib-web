@@ -73,7 +73,6 @@ public class BookResource {
         }
         Book result = bookRepository.save(book);
         bookSearchRepository.save(result);
-        messagingTemplate.convertAndSend("/topic/addingBooks", new IsbnDTO("9781418589141", IsbnDTO.Action.NEW));
         return ResponseEntity.created(new URI("/api/books/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("book", result.getId().toString()))
             .body(result);

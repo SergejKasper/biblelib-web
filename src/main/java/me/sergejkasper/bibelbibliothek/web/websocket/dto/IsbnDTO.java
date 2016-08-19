@@ -13,6 +13,10 @@ public class IsbnDTO {
         this.action = action;
     }
 
+    public IsbnDTO(){
+
+    }
+
     public Action getAction() {
         return action;
     }
@@ -33,7 +37,7 @@ public class IsbnDTO {
 
     @Override
     public String toString() {
-        return "ActivityDTO{" +
+        return "IsbnDTO{" +
             "isbn='" + isbn + '\'' +
             ", action='" + action + '\'' +
             '}';

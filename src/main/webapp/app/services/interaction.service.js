@@ -40,10 +40,10 @@
                 connected.resolve('success');
                 subscribe();
             });
-            listener.promise.then(null, null, function(activity) {
+            listener.promise.then(null, null, function(isbnEvent) {
                 setTimeout(function(){
                     $state.go('book.new',{isbn
-                        :"124525313453"});
+                        : isbnEvent.isbn});
                 }, 2000);
             });
             $rootScope.$on('$destroy', function () {
@@ -65,7 +65,7 @@
         }
         function subscribe () {
             connected.promise.then(function() {
-                subscriber = stompClient.subscribe('/topic/addingBooks', function(data) {
+                subscriber = stompClient.subscribe('/topic/isbn', function(data) {
                     listener.notify(angular.fromJson(data.body));
                 });
             }, null, null);

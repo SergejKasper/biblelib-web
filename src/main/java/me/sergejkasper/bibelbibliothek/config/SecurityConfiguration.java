@@ -80,7 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf()
             .ignoringAntMatchers("/websocket/**")
-            .ignoringAntMatchers("/addBook/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
@@ -111,6 +110,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sameOrigin()
         .and()
             .authorizeRequests()
+            .antMatchers("/api/isbn").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
