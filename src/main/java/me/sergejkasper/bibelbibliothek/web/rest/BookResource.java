@@ -9,7 +9,6 @@ import me.sergejkasper.bibelbibliothek.security.AuthoritiesConstants;
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
 import me.sergejkasper.bibelbibliothek.web.views.Views;
-import me.sergejkasper.bibelbibliothek.web.websocket.dto.IsbnDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
