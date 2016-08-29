@@ -1,5 +1,7 @@
 <div>
-    <h2 translate="bibelBibliothekApp.hasBook.home.title">Has Books</h2>
+    <h2  ng-hide="vm.noHasBookDetails" translate="bibelBibliothekApp.hasBook.home.title">Has Books</h2>
+    <h5  ng-show="vm.noHasBookDetails" translate="bibelBibliothekApp.hasBook.home.title">Has Books</h5>
+
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -38,7 +40,7 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="borrowDate"><span translate="bibelBibliothekApp.hasBook.borrowDate">Borrow Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="returnDate"><span translate="bibelBibliothekApp.hasBook.returnDate">Return Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="borrower.name"><span translate="bibelBibliothekApp.hasBook.borrower">Borrower</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="borrower.name" ng-hide="vm.noHasBookDetails"><span translate="bibelBibliothekApp.hasBook.borrower">Borrower</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="book.title"><span translate="bibelBibliothekApp.hasBook.book">Book</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -48,7 +50,7 @@
                     <td><a ui-sref="has-book-detail({id:hasBook.id})">{{hasBook.id}}</a></td>
                         <td>{{hasBook.borrowDate | date:'mediumDate'}}</td>
                         <td>{{hasBook.returnDate | date:'mediumDate'}}</td>
-                    <td>
+                    <td ng-hide="vm.noHasBookDetails">
                         <a ui-sref="borrower-detail({id:hasBook.borrower.id})">{{hasBook.borrower.name}}</a>
                     </td>
                     <td>

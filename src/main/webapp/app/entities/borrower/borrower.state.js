@@ -48,6 +48,10 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('borrower');
+                    $translatePartialLoader.addPart('global');
+                    $translatePartialLoader.addPart('hasBook');
+                    $translatePartialLoader.addPart('language');
+
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Borrower', function($stateParams, Borrower) {
