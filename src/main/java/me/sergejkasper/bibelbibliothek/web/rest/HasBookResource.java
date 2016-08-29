@@ -8,10 +8,14 @@ import me.sergejkasper.bibelbibliothek.repository.search.HasBookSearchRepository
 import me.sergejkasper.bibelbibliothek.web.rest.util.HeaderUtil;
 import me.sergejkasper.bibelbibliothek.web.rest.util.PaginationUtil;
 import me.sergejkasper.bibelbibliothek.web.views.Views;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +32,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -166,14 +171,17 @@ public class HasBookResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<HasBook>> searchHasBooks(@RequestParam String query, Pageable pageable)
+    public ResponseEntity<List<HasBook>> searchHasBooks(@RequestParam( required = false) String query, Pageable pageable, @RequestParam( required = false) String borrower, @RequestParam( required = false) String isbn)
         throws URISyntaxException {
         log.debug("REST request to search for a page of HasBooks for query {}", query);
-        Page<HasBook> page = hasBookSearchRepository.search(queryStringQuery(query), pageable);
+        BoolQueryBuilder searchQueryBuilder = boolQuery();
+        if(query != null && !query.isEmpty()) searchQueryBuilder.must(queryStringQuery(query));
+        if(isbn != null && !isbn.isEmpty()) searchQueryBuilder.must(matchQuery("bookIsbn",isbn).operator(AND));
+        if(borrower != null && !borrower.isEmpty()) searchQueryBuilder.must(matchQuery("borrower.name",borrower).operator(AND));
+        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(searchQueryBuilder).withPageable(pageable).build();
+        Page<HasBook> page = hasBookSearchRepository.search(searchQuery);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/has-books");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
-
-
 }
 
