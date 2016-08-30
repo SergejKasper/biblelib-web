@@ -40,10 +40,26 @@
                 connected.resolve('success');
                 subscribe();
             });
-            listener.promise.then(null, null, function(isbnEvent) {
+            listener.promise.then(null, null, function(interactionEvent) {
                 setTimeout(function(){
-                    $state.go('book.new',{isbn
-                        : isbnEvent.isbn});
+                    switch(interactionEvent.action){
+                        case "NEW":
+                            $state.go('book.new',{isbn
+                                : interactionEvent.isbn}, {reload: true});
+                            break;
+                        case "BORROW":
+                            $state.go('borrower-detail',{id
+                                : interactionEvent.borrower.id}, {reload: true});
+                            break;
+                        case "RETURN":
+                            $state.go('borrower-detail',{id
+                                : interactionEvent.borrower.id}, {reload: true});
+                            break;
+                        default:
+                            alert("Etwas lief schief: " + JSON.stringify(interactionEvent));
+                            break;
+                    }
+
                 }, 2000);
             });
             $rootScope.$on('$destroy', function () {
@@ -65,7 +81,7 @@
         }
         function subscribe () {
             connected.promise.then(function() {
-                subscriber = stompClient.subscribe('/topic/isbn', function(data) {
+                subscriber = stompClient.subscribe('/topic/interaction', function(data) {
                     listener.notify(angular.fromJson(data.body));
                 });
             }, null, null);

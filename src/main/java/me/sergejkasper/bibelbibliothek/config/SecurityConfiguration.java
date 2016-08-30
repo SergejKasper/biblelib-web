@@ -71,8 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
             .antMatchers("/h2-console/**")
-            .antMatchers("/websocket/addBook")
-            .antMatchers("/websocket/addBook/**");
+            .antMatchers("/socketapi/**");
     }
 
     @Override
@@ -80,6 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf()
             .ignoringAntMatchers("/websocket/**")
+            .ignoringAntMatchers("/socketapi/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
@@ -110,7 +110,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sameOrigin()
         .and()
             .authorizeRequests()
-            .antMatchers("/api/isbn").permitAll()
+            .antMatchers("/api/interaction").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()

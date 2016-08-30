@@ -60,7 +60,7 @@ public class Book implements Serializable {
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     @JsonView(Views.Book.class)
-    private Set<HasBook> borrowers = new HashSet<>();
+    private Set<HasBook> borrowers = new HashSet<HasBook>();
 
     @ManyToOne
     @JsonView(Views.Public.class)
