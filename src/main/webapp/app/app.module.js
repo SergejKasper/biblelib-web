@@ -3,9 +3,10 @@
 
     angular
         .module('bibelBibliothekApp', [
-            'ngStorage', 
+            'wu.masonry',
+            'ngStorage',
             'tmh.dynamicLocale',
-            'pascalprecht.translate', 
+            'pascalprecht.translate',
             'ngResource',
             'ngCookies',
             'ngAria',

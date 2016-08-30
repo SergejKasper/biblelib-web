@@ -2,6 +2,11 @@ body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
+    background: url(content/images/background.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: scroll;
+    height: 100vh;
 }
 
 /* ==========================================================================
@@ -284,6 +289,7 @@ entity tables helpers
    justify-content: flex-end;
 }
 
+
 .jh-table > {
     tbody > tr > td {
         /* Align text in td verifically (top aligned by Bootstrap) */
@@ -322,7 +328,9 @@ entity detail page css
             margin-left: 0;
         }
     }
+
 }
+
 
 /* ==========================================================================
 ui bootstrap tweaks
@@ -340,14 +348,15 @@ ui bootstrap tweaks
 .uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
     outline: none;
 }
-
 /* ==========================================================================
 CUSTOM
 ========================================================================== */
 
 textarea {
-  resize: vertical; /* user can resize vertically, but width is fixed */
+  resize: vertical;
 }
 
+
+@import "bootstrap/_thumbnail";
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

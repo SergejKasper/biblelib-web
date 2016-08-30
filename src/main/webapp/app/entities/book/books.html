@@ -31,60 +31,57 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="bookIsbn"><span translate="bibelBibliothekApp.book.bookIsbn">Book Isbn</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="title"><span translate="bibelBibliothekApp.book.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="description"><span translate="bibelBibliothekApp.book.description">Description</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="language"><span translate="bibelBibliothekApp.book.language">Language</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="cover"><span translate="bibelBibliothekApp.book.cover">Cover</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="author.name"><span translate="bibelBibliothekApp.book.author">Author</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="book in vm.books track by book.id">
-                    <td><a ui-sref="book-detail({id:book.id})">{{book.id}}</a></td>
-                    <td>{{book.bookIsbn}}</td>
-                    <td>{{book.title}}</td>
-                    <td>{{book.description}}</td>
-                    <td translate="{{'bibelBibliothekApp.Language.' + book.language}}">{{book.language}}</td>
-                    <td>
-                        <a ng-if="book.cover" ng-click="vm.openFile(book.coverContentType, book.cover)">
-                            <img data-ng-src="{{book.cover}}" style="max-height: 30px;"/>
+    <div>
+        <div class="btn-group flex-btn-group-container" jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+            <button class="btn btn-info btn-sm" jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="bookIsbn"><span translate="bibelBibliothekApp.book.bookIsbn">Book Isbn</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="title"><span translate="bibelBibliothekApp.book.title">Title</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="description"><span translate="bibelBibliothekApp.book.description">Description</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="language"><span translate="bibelBibliothekApp.book.language">Language</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="cover"><span translate="bibelBibliothekApp.book.cover">Cover</span> <span class="glyphicon glyphicon-sort"></span></button>
+            <button class="btn btn-info btn-sm" jh-sort-by="author.name"><span translate="bibelBibliothekApp.book.author">Author</span> <span class="glyphicon glyphicon-sort"></span></button>
+        </div>
+        <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <div class="masonry-container" masonry masonry-options="{ transitionDuration: '0.4s', gutter: 10, stagger: 30, itemSelector: '.masonry-brick' , fitWidth: true}">
+                <div class="thumbnail-container masonry-brick" ng-repeat="book in vm.books track by book.id">
+                    <div class="thumbnail">
+                        <a class="thumbnail-image" ng-if="book.cover" ng-click="vm.openFile(book.coverContentType, book.cover)">
+                            <img ng-src="{{book.cover}}" alt="{{book.coverContentType}}, {{vm.byteSize(book.cover)}}">
+                            <p translate="{{'bibelBibliothekApp.Language.' + book.language}}" class="thumbnail-ribbon ribbon">{{book.language}}</p>
                         </a>
-                        <span ng-if="book.cover">{{book.coverContentType}}, {{vm.byteSize(book.cover)}}</span>
-                    </td>
-                    <td>
-                        <a ui-sref="author-detail({id:book.author.id})">{{book.author.name}}</a>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="book-detail({id:book.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="book.edit({id:book.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="book.delete({id:book.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>
+                        <div class="thumbnail-caption">
+                            <h4 class="thumbnail-title"><a ui-sref="book-detail({id:book.id})">{{book.title}}</a></h4>
+                            <div class="thumbnail-details">
+                                <p>{{book.description}}</p>
+                                <p><a ui-sref="author-detail({id:book.author.id})">{{book.author.name}}</a></p>
+                            </div>
+                            <div class="thumbnail-controls">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            ui-sref="book-detail({id:book.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="book.edit({id:book.id})"
+                                            class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="book.delete({id:book.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                    </button>
+                                </div>
+                                </p>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

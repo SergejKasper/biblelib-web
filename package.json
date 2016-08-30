@@ -64,5 +64,8 @@
   },
   "scripts": {
     "test": "gulp test"
+  },
+  "dependencies": {
+    "angular-masonry": "^0.16.0"
   }
 }
