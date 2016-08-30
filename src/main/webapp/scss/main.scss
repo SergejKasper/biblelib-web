@@ -1,10 +1,15 @@
+html {
+    overflow-y: scroll;
+    hight: auto;
+}
+
 body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
-    background: url(content/images/background.jpg) no-repeat;
-    background-size: cover;
+    background: url(../images/background.jpg) no-repeat;
     background-position: center;
+    background-size: cover;
     overflow: scroll;
     height: 100vh;
 }
@@ -328,10 +333,7 @@ entity detail page css
             margin-left: 0;
         }
     }
-
 }
-
-
 /* ==========================================================================
 ui bootstrap tweaks
 ========================================================================== */
@@ -358,5 +360,6 @@ textarea {
 
 
 @import "bootstrap/_thumbnail";
+@import "components/_masonry";
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

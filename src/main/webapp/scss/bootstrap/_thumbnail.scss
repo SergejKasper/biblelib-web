@@ -22,8 +22,8 @@
     }
 
     &-caption {
-        width: auto;
-        padding: .5em;
+        width: 96%;
+        padding: 2%;
         color: #333;
         position: absolute;
         overflow: hidden;
@@ -54,8 +54,8 @@
         background: white;
     }
     &-image{
-        height: 200px;
-        width:180px;
+        height:250px;
+        width:225px;
         overflow: hidden;
         img {
             width: inherit;
@@ -73,7 +73,7 @@
             .thumbnail-details {
                 margin-bottom: 0;
                 opacity: 1;
-                height: 250px;
+                height: 400px;
                 max-height:auto;
             }
             .thumbnail-title {
@@ -90,4 +90,12 @@
         }
     }
 
+}
+@media screen and (min-width: 992px) {
+    .thumbnail{
+        width: 250px;
+        &-image {
+            height: 290px;
+        }
+    }
 }
