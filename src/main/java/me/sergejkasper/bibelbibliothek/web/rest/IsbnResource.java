@@ -82,7 +82,6 @@ public class IsbnResource {
     @RequestMapping(value = "/interaction",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Timed
     @JsonView(Views.Book.class)
     @SendTo("/topic/interaction")

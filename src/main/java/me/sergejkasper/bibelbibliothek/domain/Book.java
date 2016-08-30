@@ -166,7 +166,6 @@ public class Book implements Serializable {
             ", title='" + title + "'" +
             ", description='" + description + "'" +
             ", language='" + language + "'" +
-            ", cover='" + cover + "'" +
             ", coverContentType='" + coverContentType + "'" +
             '}';
     }

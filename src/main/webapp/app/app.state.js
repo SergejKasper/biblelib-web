@@ -26,6 +26,11 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
                 }]
+                /*, apiRegistration: ['$http', function($http){
+                    $http.post("https://openlibrary.org/account/login", {"username": "sergejkasper", "password": "niceapi4books"}, {
+                        "Content-Type": "application/json"
+                    });
+                }]*/
             }
         });
     }

@@ -18,44 +18,58 @@
         vm.hasbooks = HasBook.query();
         vm.authors = Author.query();
 
-        vm.getBookInfo = function(){
-            if(!vm.book.bookIsbn.length === 13 || !vm.book.bookIsbn.length === 10 ) return;
-            vm.isSaving = true;
-            $http.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + vm.book.bookIsbn).then(function(res){
-                if(!res.data.items){
-                   /* $http.get('http://isbndb.com/api/v2/json/W25MX2G5/books?q=9781470196158&cacheBuster=1472481718355').then(function(res){
-                        if(!res.result_count || !res.result_count < 1){
-                            AlertService.error("Keine passenden Bücher gefunden.");
-                            return;
-                        }
-                        var resp = res.data[0];
-                        this.addBook(resp.title,
-                            resp.summary,
-                            resp.language,
-                            resp.author_data.map(function(a){
-                                // reformat: surename, name to name surname and return string[]
-                                var name = a.name.split(", ");
-                                return name[1] + " " + name[0];
-                            }));
-                    }, function(err){
-                        alert("Ein Fehler ist aufgetreten: ", JSON.stringify(err));
-                        return;
-                    })*/
-                }
-                return;
-                var resp = res.data.items[0].volumeInfo;
-                if (resp){
-                    this.addBook(resp.title,
-                        resp.description,
-                        resp.language,
-                        resp.imageLinks.thumbnail,
-                        resp.authors);
-                }
+        vm.getBookInfoFromOpenlibrary = function(){
+            return $http.jsonp('https://openlibrary.org/api/books?bibkeys=ISBN:' + vm.book.bookIsbn +'&jscmd=data&callback=JSON_CALLBACK').then(function(res){
+                /*if(!res.result_count || !res.result_count < 1){
+                    AlertService.error("Keine passenden Bücher gefunden.");
 
+                    vm.getBookInfoFromGoogleBooks
+
+                    return;
+                }*/
+                var resp = res.data['ISBN:' + vm.book.bookIsbn];
+                vm.addBook(resp.title,
+                    resp.summary,
+                    null,
+                    resp.cover.large,
+                    resp.authors.map(function(a){
+                        return a.name;
+                    }));
             }, function(err){
                 alert("Ein Fehler ist aufgetreten: ", JSON.stringify(err));
                 return;
-            })
+            });
+        };
+
+        vm.getBookInfoFromGoogleBooks = function(){
+            return $http.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + vm.book.bookIsbn).then(function(res){
+                if(!res.data.items){
+                    //http://isbndb.com/api/v2/json/W25MX2G5/books?q=9781470196158&cacheBuster=1472481718355
+                    return false;
+                }
+                var resp = res.data.items[0].volumeInfo;
+                var imageLink = null;
+                if(resp.imageLinks) imageLink = resp.imageLinks.thumbnail;
+                if (resp){
+                    vm.addBook(resp.title,
+                        resp.description,
+                        resp.language,
+                        imageLink,
+                        resp.authors);
+                }
+                return true;
+            }, function(err){
+                alert("Ein Fehler ist aufgetreten: ", JSON.stringify(err));
+                return false;
+            });
+        }
+
+        vm.getBookInfo = function(){
+            if(!vm.book.bookIsbn.length === 13 || !vm.book.bookIsbn.length === 10 ) return;
+            vm.isSaving = true;
+            vm.getBookInfoFromOpenlibrary().then(function(result){
+                if(!result) vm.getBookInfoFromGoogleBooks();
+            });
         };
 
         if($stateParams.isbn){
@@ -67,10 +81,12 @@
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        function addBook(title, description, language, cover, authors){
+        vm.addBook = function addBook(title, description, language, cover, authors){
             vm.book.title = title;
-            vm.book.description = description.substring(0, 252);
-            if(vm.book.description.length === 252) vm.book.description = vm.book.description + "...";
+            if(description){
+                vm.book.description = description.substring(0, 252);
+                if(vm.book.description.length === 252) vm.book.description = vm.book.description + "...";
+            }
             switch(language){
                 case "en":
                     vm.book.language = "ENGLISCH";
@@ -82,7 +98,7 @@
                     vm.book.language = "RUSSISCH";
                     break;
             }
-            vm.book.cover = cover;
+            if(cover) vm.book.cover = cover;
             vm.book.coverContentType = "";
             var authorName = authors.join(", ");
             if(!vm.authors.some(function(author){

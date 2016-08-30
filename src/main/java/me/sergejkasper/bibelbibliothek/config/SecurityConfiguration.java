@@ -21,6 +21,8 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
 
 import javax.inject.Inject;
+import javax.servlet.*;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -63,23 +65,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
+            //.antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/bower_components/**")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
-            .antMatchers("/h2-console/**")
-            .antMatchers("/socketapi/**");
+            .antMatchers("/h2-console/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .addFilterBefore(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .csrf()
-            .ignoringAntMatchers("/websocket/**")
             .ignoringAntMatchers("/socketapi/**")
+            .ignoringAntMatchers("/websocket/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
