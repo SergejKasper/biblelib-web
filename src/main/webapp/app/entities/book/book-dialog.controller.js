@@ -5,9 +5,9 @@
         .module('bibelBibliothekApp')
         .controller('BookDialogController', BookDialogController);
 
-    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author', '$http', 'AlertService'];
+    BookDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Book', 'HasBook', 'Author', '$http', 'AlertService', 'printHandler'];
 
-    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, HasBook, Author, $http, AlertService) {
+    function BookDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Book, HasBook, Author, $http, AlertService, printHandler) {
         var vm = this;
 
         vm.book = entity;
@@ -20,13 +20,8 @@
 
         vm.getBookInfoFromOpenlibrary = function(){
             return $http.jsonp('https://openlibrary.org/api/books?bibkeys=ISBN:' + vm.book.bookIsbn +'&jscmd=data&callback=JSON_CALLBACK').then(function(res){
-                /*if(!res.result_count || !res.result_count < 1){
-                    AlertService.error("Keine passenden Bücher gefunden.");
-
-                    vm.getBookInfoFromGoogleBooks
-
-                    return;
-                }*/
+                /*if(!res.result_count || !res.result_count < 1)*/
+                if(!res.data['ISBN:' + vm.book.bookIsbn])return;
                 var resp = res.data['ISBN:' + vm.book.bookIsbn];
                 vm.addBook(resp.title,
                     resp.summary,
@@ -118,6 +113,23 @@
                     vm.isSaving = false;
                 });
             }
+        }
+
+        vm.generateBibleLibISBN = function generateBibleLibISBN(){
+            vm.book.bookIsbn = Math.floor(Math.random() * 90000000) + 10000000;
+        };
+
+        vm.printLabel = function printLabel() {
+            if (!vm.book.bookIsbn){
+                alert("eigene ISBN darf nicht leer sein");
+                return;
+            }
+            if(vm.book.bookIsbn.length > 8 ){
+                alert("eigene ISBN darf nicht mehr als 8 Zeichen lang sein")
+                return;
+            }
+
+            printHandler.print(vm.book.bookIsbn);
         }
 
         function clear () {

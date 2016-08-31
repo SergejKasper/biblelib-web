@@ -22,7 +22,9 @@
             "language": "Sprache",
             "cover": "Cover",
             "borrower": "Ausleiher",
-            "author": "Autor"
+            "author": "Autor",
+            "instructions1": "Wenn das Buch keine ISBN hat, sollte hier eine eigene \"BibelLib-ISBN\" generiert werden.",
+            "instructions2": "Um Bücher die keine offizielle ISBN haben schnell über die App verleihen zu können, <br/> sollte man hier das Etikett mit der BibelLib-ISBN drucken und hinten auf das Buch kleben."
         }
     }
 }

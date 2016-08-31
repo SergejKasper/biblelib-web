@@ -1,4 +1,4 @@
-<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+<form name="editForm" role="form" novalidate show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -16,17 +16,24 @@
         <div class="form-group">
             <label class="control-label" translate="bibelBibliothekApp.book.bookIsbn" for="field_bookIsbn">Book
                 Isbn</label>
-
             <div class="input-group">
                 <input type="text" class="form-control" name="bookIsbn" id="field_bookIsbn"
                        ng-model="vm.book.bookIsbn"
                     />
                 <span class="input-group-btn">
-                <input type="button" class="btn btn-default" ng-click="vm.getBookInfo()">
-                     <span translate="entity.action.save">Save</span>
-                    </input>
+                    <button class="btn btn-default" ng-click="vm.getBookInfo()">
+                        <span translate="entity.action.save">Save</span>
+                    </button>
                 </span>
             </div>
+            <br>
+            <div translate="bibelBibliothekApp.book.instructions1">
+                Wenn das Buch keine ISBN hat, sollte hier eine eigene "ISBN" generiert werden.
+            </div>
+            <br>
+            <button class="btn btn-default" ng-click="vm.generateBibleLibISBN()">
+                <span translate="entity.action.create">Create</span>
+            </button>
         </div>
         <div class="form-group">
             <label class="control-label" translate="bibelBibliothekApp.book.title" for="field_title">Title</label>
@@ -101,13 +108,22 @@
                 <option value=""></option>
             </select>
         </div>
+        <div>
+            <div translate="bibelBibliothekApp.book.instructions2">
+                Um Bücher die keine ISBN haben schnell über die App verleihen zu können,
+                sollte man hier das Etikett zur BibelLib-ISBN drucken und hinten auf das Buch kleben.</div>
+            <button type="button" class="btn btn-lg btn-info" data-dismiss="modal" ng-click="vm.printLabel()">
+                <span class="glyphicon glyphicon-print"></span>&nbsp;<span
+                translate="entity.action.print">Drucken</span>
+            </button>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
             translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" ng-click="vm.save()">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

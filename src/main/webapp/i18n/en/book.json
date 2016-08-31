@@ -22,7 +22,9 @@
             "language": "Language",
             "cover": "Cover",
             "borrower": "Borrower",
-            "author": "Author"
+            "author": "Author",
+            "instructions1": "If this book does not have an ISBN, you must generate a custom \"BibelLib-ISBN\" here.",
+            "instructions2": "To quickly scan books without official ISBN <br/> you should print a lable with the BibleLib-ISBN and attach it to the back of the book."
         }
     }
 }

@@ -21,10 +21,11 @@
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = ['stateHandler', 'translationHandler', 'printHandler'];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler, printHandler) {
         stateHandler.initialize();
         translationHandler.initialize();
+        printHandler.initialize();
     }
 })();

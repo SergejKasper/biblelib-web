@@ -25,7 +25,7 @@
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <page-ribbon></page-ribbon>
+    <!-- page-ribbon></page-ribbon -->
     <div ui-view="navbar" ng-cloak=""></div>
     <div class="container">
         <div ui-view="content">
@@ -60,7 +60,6 @@
     </script>-->
 
     <!-- build:js app/vendor.js -->
-    <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/jquery-bridget/jquery-bridget.js"></script>
     <script src="bower_components/ev-emitter/ev-emitter.js"></script>
@@ -94,7 +93,6 @@
     <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-    <!-- endinject -->
     <!-- endbuild -->
 
     <!-- build:js app/app.js  -->
@@ -123,6 +121,7 @@
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
+    <script src="app/external/DYMO.Label.Framework_2.0.js"></script>
     <script src="app/entities/has-book/has-book-dialog.controller.js"></script>
     <script src="app/entities/has-book/has-book-detail.controller.js"></script>
     <script src="app/entities/has-book/has-book-delete-dialog.controller.js"></script>
@@ -184,6 +183,7 @@
     <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
     <script src="app/blocks/handlers/translation.handler.js"></script>
     <script src="app/blocks/handlers/state.handler.js"></script>
+    <script src="app/blocks/handlers/printer.handler.js"></script>
     <script src="app/blocks/config/uib-pagination.config.js"></script>
     <script src="app/blocks/config/uib-pager.config.js"></script>
     <script src="app/blocks/config/translation-storage.provider.js"></script>

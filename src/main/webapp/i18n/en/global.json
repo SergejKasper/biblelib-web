@@ -92,7 +92,9 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View"
+            "view": "View",
+            "print": "Print",
+            "create": "Create"
         },
         "detail": {
             "field": "Field",
