@@ -56,6 +56,22 @@ Developement Ribbon
     }
 }
 
+.navbar {
+    border: none;
+    border-radius: 0;
+    background: url(../images/purty_wood.png) repeat-x;
+    &-default &-nav {
+        .active a{
+            background-color: rgba(255,255,255, 0.25);
+        }
+        &> .open > a {
+            &:hover{
+                background-color: rgba(255,255,255, 0.375);
+            }
+        }
+    }
+}
+
 /* ==========================================================================
 Version number in navbar
 ========================================================================== */
@@ -110,7 +126,7 @@ Main page styles
     display: inline-block;
     width: 347px;
     height: 497px;
-    background: url("../images/hipster.png") no-repeat center top;
+    background: url("../images/churchlogo.png") no-repeat center top;
     background-size: contain;
 }
 
@@ -123,7 +139,7 @@ only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
     .hipster {
-        background: url("../images/hipster2x.png") no-repeat center top;
+        background: url("../images/churchlogo.png") no-repeat center top;
         background-size: contain;
     }
 }
