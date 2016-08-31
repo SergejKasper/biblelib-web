@@ -16,6 +16,8 @@
             "detail": {
                 "title": "Book"
             },
+            "copies": "Create copies",
+            "label": "Print barcode label",
             "bookIsbn": "Book Isbn",
             "title": "Title",
             "description": "Description",
@@ -24,7 +26,8 @@
             "borrower": "Borrower",
             "author": "Author",
             "instructions1": "If this book does not have an ISBN, you must generate a custom \"BibelLib-ISBN\" here.",
-            "instructions2": "To quickly scan books without official ISBN <br/> you should print a lable with the BibleLib-ISBN and attach it to the back of the book."
+            "instructions2": "To quickly scan books without official ISBN <br/> you should print a lable with the BibleLib-ISBN and attach it to the back of the book.",
+            "instructions3": "Should additional copies of this book be created? <br/> Provide the amount and save this book. If the saving of the book works, the copies will be created. "
         }
     }
 }

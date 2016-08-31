@@ -16,6 +16,8 @@
             "detail": {
                 "title": "Buch"
             },
+            "copies": "Kopien anlegen",
+            "label": "Strichcode-Etikett Drucken",
             "bookIsbn": "Buch Isbn",
             "title": "Titel",
             "description": "Beschreibung",
@@ -24,7 +26,9 @@
             "borrower": "Ausleiher",
             "author": "Autor",
             "instructions1": "Wenn das Buch keine ISBN hat, sollte hier eine eigene \"BibelLib-ISBN\" generiert werden.",
-            "instructions2": "Um Bücher die keine offizielle ISBN haben schnell über die App verleihen zu können, <br/> sollte man hier das Etikett mit der BibelLib-ISBN drucken und hinten auf das Buch kleben."
+            "instructions2": "Um Bücher die keine offizielle ISBN haben schnell über die App verleihen zu können, <br/> sollte man hier das Etikett mit der BibelLib-ISBN drucken und hinten auf das Buch kleben.",
+            "instructions3": "Sollen zusätzliche Kopien dieses Buches angelegt werden? <br/> Geben sie die Anzahl ein und speichern sie dieses Buch.Wenn das Speichern/Ändern funktioniert hat, werden die zusätzlichen Kopien erzeugt. "
+
         }
     }
 }

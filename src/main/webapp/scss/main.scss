@@ -374,8 +374,9 @@ textarea {
   resize: vertical;
 }
 
-
+@import "bootstrap/_buttons";
 @import "bootstrap/_thumbnail";
 @import "components/_masonry";
+
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

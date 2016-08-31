@@ -8,115 +8,136 @@
     </div>
     <div class="modal-body">
         <jhi-alert></jhi-alert>
-        <div class="form-group" ng-show="vm.book.id">
+
+        <div class="form-group" ng-show="vm.book.id" style="visibility: hidden; height: 0;">
             <label for="id" translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   ng-model="vm.book.id" readonly/>
+            <input type="text" class="form-control" id="id" name="id" ng-model="vm.book.id" readonly/>
         </div>
-        <div class="form-group">
-            <label class="control-label" translate="bibelBibliothekApp.book.bookIsbn" for="field_bookIsbn">Book
-                Isbn</label>
-            <div class="input-group">
-                <input type="text" class="form-control" name="bookIsbn" id="field_bookIsbn"
-                       ng-model="vm.book.bookIsbn"
-                    />
-                <span class="input-group-btn">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label class="control-label" translate="bibelBibliothekApp.book.title" for="field_title">Title</label>
+                        <input type="text" class="form-control" name="title" id="field_title"
+                               ng-model="vm.book.title"
+                               required ng-maxlength="80"/>
+
+                        <div ng-show="editForm.title.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.title.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+
+                            <p class="help-block"
+                               ng-show="editForm.title.$error.maxlength" translate="entity.validation.maxlength"
+                               translate-value-max="80">
+                                This field cannot be longer than 80 characters.
+                            </p>
+                        </div>
+                    </div>
+
+                    <label class="control-label" translate="bibelBibliothekApp.book.bookIsbn" for="field_bookIsbn">Book
+                        Isbn</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="bookIsbn" id="field_bookIsbn"
+                               ng-model="vm.book.bookIsbn"
+                        />
+                        <span class="input-group-btn">
                     <button class="btn btn-default" ng-click="vm.getBookInfo()">
                         <span translate="entity.action.save">Save</span>
                     </button>
                 </span>
-            </div>
-            <br>
-            <div translate="bibelBibliothekApp.book.instructions1">
-                Wenn das Buch keine ISBN hat, sollte hier eine eigene "ISBN" generiert werden.
-            </div>
-            <br>
-            <button class="btn btn-default" ng-click="vm.generateBibleLibISBN()">
-                <span translate="entity.action.create">Create</span>
-            </button>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="bibelBibliothekApp.book.title" for="field_title">Title</label>
-            <input type="text" class="form-control" name="title" id="field_title"
-                   ng-model="vm.book.title"
-                   required ng-maxlength="80"/>
-
-            <div ng-show="editForm.title.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.title.$error.required" translate="entity.validation.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                   ng-show="editForm.title.$error.maxlength" translate="entity.validation.maxlength"
-                   translate-value-max="80">
-                    This field cannot be longer than 80 characters.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="bibelBibliothekApp.book.description" for="field_description">Description</label>
-            <textarea rows="4" class="form-control" name="description" id="field_description"
-                      ng-model="vm.book.description"
-                      ng-maxlength="255"/>
-            <div ng-show="editForm.description.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength"
-                   translate-value-max="255">
-                    This field cannot be longer than 255 characters.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="bibelBibliothekApp.book.language"
-                   for="field_language">Language</label>
-            <select class="form-control" name="language" ng-model="vm.book.language" id="field_language">
-                <option value="DEUTSCH" translate="bibelBibliothekApp.Language.DEUTSCH">DEUTSCH</option>
-                <option value="ENGLISCH" translate="bibelBibliothekApp.Language.ENGLISCH">ENGLISCH</option>
-                <option value="RUSSISCH" translate="bibelBibliothekApp.Language.RUSSISCH">RUSSISCH</option>
-            </select>
-        </div>
-
-        <div class="form-group" ngf-drop ngf-change="vm.setCover($file, vm.book)" ngf-pattern="'*'">
-            <label class="control-label" translate="bibelBibliothekApp.book.cover" for="field_cover">Cover</label>
-
-            <div>
-                <img data-ng-src="{{vm.book.cover}}" onerror="this.style.display='block !important'" style="max-height: 100px; display: block !important;"/>
-                <div ng-if="vm.book.cover" class="help-block clearfix">
-                    <span class="pull-left">{{vm.book.coverContentType}}, {{vm.byteSize(vm.book.cover)}}</span>
-                    <button ng-click="vm.book.cover=null;vm.book.coverContentType=null;"
-                            class="btn btn-default btn-xs pull-right">
-                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                    <br>
+                    <div translate="bibelBibliothekApp.book.instructions1">
+                        Wenn das Buch keine ISBN hat, sollte hier eine eigene "ISBN" generiert werden.
+                    </div>
+                    <br>
+                    <button class="btn btn-default" ng-click="vm.generateBibleLibISBN()">
+                        <span translate="entity.action.create">Create</span>
                     </button>
                 </div>
-                <button type="file" ngf-select class="btn btn-default btn-block"
-                        ngf-change="vm.setCover($file, vm.book)" accept="image/*" translate="entity.action.addimage">
-                    Add image
-                </button>
+                <br>
+                <div>
+                    <label translate="bibelBibliothekApp.book.copies" for="field_copies">Kopien anlegen</label>
+                    <p translate="bibelBibliothekApp.book.instructions3">
+                        Save additional copies.
+                    </p>
+                    <select style="width: 5em;" class="form-control" id="field_copies" name="author" ng-model="vm.copies"
+                            ng-options="copyNr for copyNr in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label translate="bibelBibliothekApp.book.label" for="field_copies">Print label</label>
+
+                    <div translate="bibelBibliothekApp.book.instructions2">
+                        Um Bücher die keine ISBN haben schnell über die App verleihen zu können,
+                        sollte man hier das Etikett zur BibelLib-ISBN drucken und hinten auf das Buch kleben.</div>
+                    <br>
+                    <button type="button" class="btn btn-md btn-info" data-dismiss="modal" ng-click="vm.printLabel()">
+                        <span class="glyphicon glyphicon-print"></span>&nbsp;<span
+                        translate="entity.action.print">Drucken</span>
+                    </button>
+                </div>
             </div>
-            <input type="hidden" class="form-control" name="cover" id="field_cover"
-                   ng-model="vm.book.cover"
-                />
-            <input type="hidden" class="form-control" name="coverContentType" id="field_coverContentType"
-                   ng-model="vm.book.coverContentType"/>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" translate="bibelBibliothekApp.book.description" for="field_description">Description</label>
+                    <textarea rows="4" class="form-control" name="description" id="field_description"
+                              ng-model="vm.book.description"
+                              ng-maxlength="255"/>
+                    <div ng-show="editForm.description.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength"
+                           translate-value-max="255">
+                            This field cannot be longer than 255 characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" translate="bibelBibliothekApp.book.language"
+                           for="field_language">Language</label>
+                    <select class="form-control" name="language" ng-model="vm.book.language" id="field_language">
+                        <option value="DEUTSCH" translate="bibelBibliothekApp.Language.DEUTSCH">DEUTSCH</option>
+                        <option value="ENGLISCH" translate="bibelBibliothekApp.Language.ENGLISCH">ENGLISCH</option>
+                        <option value="RUSSISCH" translate="bibelBibliothekApp.Language.RUSSISCH">RUSSISCH</option>
+                    </select>
+                </div>
+                <div class="form-group" ngf-drop ngf-change="vm.setCover($file, vm.book)" ngf-pattern="'*'">
+                    <label class="control-label" translate="bibelBibliothekApp.book.cover" for="field_cover">Cover</label>
+
+                    <div>
+                        <img data-ng-src="{{vm.book.cover}}" onerror="this.style.display='block !important'" style="width:100%; margin: auto; display: block !important;"/>
+                        <div ng-if="vm.book.cover" class="help-block clearfix">
+                            <button ng-click="vm.book.cover=null;vm.book.coverContentType=null;"
+                                    class="btn btn-default btn-xs pull-right image-cancel-button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <button type="file" ngf-select class="btn btn-default btn-block"
+                                ngf-change="vm.setCover($file, vm.book)" accept="image/*" translate="entity.action.addimage">
+                            Add image
+                        </button>
+                    </div>
+                    <input type="hidden" class="form-control" name="cover" id="field_cover"
+                           ng-model="vm.book.cover"
+                    />
+                    <input type="hidden" class="form-control" name="coverContentType" id="field_coverContentType"
+                           ng-model="vm.book.coverContentType"/>
+                </div>
+                <div class="form-group">
+                    <label translate="bibelBibliothekApp.book.author" for="field_author">Author</label>
+                    <select class="form-control" id="field_author" name="author" ng-model="vm.book.author"
+                            ng-options="author as author.name for author in vm.authors track by author.id">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label translate="bibelBibliothekApp.book.author" for="field_author">Author</label>
-            <select class="form-control" id="field_author" name="author" ng-model="vm.book.author"
-                    ng-options="author as author.name for author in vm.authors track by author.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div>
-            <div translate="bibelBibliothekApp.book.instructions2">
-                Um Bücher die keine ISBN haben schnell über die App verleihen zu können,
-                sollte man hier das Etikett zur BibelLib-ISBN drucken und hinten auf das Buch kleben.</div>
-            <button type="button" class="btn btn-lg btn-info" data-dismiss="modal" ng-click="vm.printLabel()">
-                <span class="glyphicon glyphicon-print"></span>&nbsp;<span
-                translate="entity.action.print">Drucken</span>
-            </button>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

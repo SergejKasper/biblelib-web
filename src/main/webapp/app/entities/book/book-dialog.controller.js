@@ -147,6 +147,11 @@
 
         function onSaveSuccess (result) {
             $scope.$emit('bibelBibliothekApp:bookUpdate', result);
+            if(vm.copies > 0){
+                vm.copies=--vm.copies;
+                vm.book.id = null;
+                save();
+            }
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }
