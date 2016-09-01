@@ -1,3 +1,5 @@
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
 html {
     overflow-y: scroll;
     hight: auto;
@@ -61,8 +63,11 @@ Developement Ribbon
     border-radius: 0;
     background: url(../images/purty_wood.png) repeat-x;
     &-default &-nav {
-        .active a{
+        &> .active > a{
             background-color: rgba(255,255,255, 0.25);
+        }
+        &> .active > a{
+            background-color: rgba(255,255,255, 0.5);
         }
         &> .open > a {
             &:hover{
@@ -366,6 +371,7 @@ ui bootstrap tweaks
 .uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
     outline: none;
 }
+
 /* ==========================================================================
 CUSTOM
 ========================================================================== */

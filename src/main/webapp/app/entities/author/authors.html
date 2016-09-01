@@ -31,43 +31,47 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="name"><span translate="bibelBibliothekApp.author.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="author in vm.authors track by author.id">
-                    <td><a ui-sref="author-detail({id:author.id})">{{author.id}}</a></td>
-                    <td>{{author.name}}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="author-detail({id:author.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="author.edit({id:author.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="author.delete({id:author.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>
+    <div>
+        <div>
+            <div >
+                <div class="btn-group flex-btn-group-container" jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <!-- th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th -->
+                    <div class="btn btn-info btn-sm" jh-sort-by="name"><span translate="bibelBibliothekApp.author.name">Name</span> <span class="glyphicon glyphicon-sort"></span></div>
+                </div>
+            </div>
+            <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <div  ng-repeat="author in vm.authors track by author.id">
+                    <br>
+                    <div class="container row">
+                        <div class="panel panel-default panel-body ng-binding">
+                            <h4 class="pull-left">{{author.name}}</h4>
+                            <div class="pull-right" style="margin: .25em;">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            ui-sref="author-detail({id:author.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="author.edit({id:author.id})"
+                                            class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="author.delete({id:author.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                        <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
